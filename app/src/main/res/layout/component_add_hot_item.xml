@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="256dip"
+    android:background="@drawable/gray_round_rect_white_bg"
+    android:layout_height="240dip">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:id="@+id/add_hot_item_area"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_marginLeft="20dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/plus_red_for_popup_module"/>
+
+            <TextView
+                android:id="@+id/create_new_item_btn"
+                android:paddingLeft="12dip"
+                android:layout_width="match_parent"
+                android:paddingRight="12dip"
+                android:text="Create New Event"
+                android:textSize="18sp"
+                android:textColor="#fe0000"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/enter_new_item_area"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#ff0000"
+                android:gravity="center"
+                android:paddingLeft="4dip"
+                android:paddingRight="4dip"
+                android:textStyle="bold"
+                android:id="@+id/new_hot_item_label"
+                android:text="Event Name:"/>
+            <EditText
+                android:id="@+id/new_hot_item_edit"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
+
+    </FrameLayout>
+    <ListView
+        android:id="@+id/hot_list"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:dividerHeight="0.5dip"
+
+        android:divider="#9f9f9f"
+        android:layout_height="match_parent">
+
+
+    </ListView>
+
+</LinearLayout>

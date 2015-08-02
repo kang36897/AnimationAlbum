@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/target_photo"
+    android:background="@drawable/football_girl"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_marginTop="15dip"
+            android:layout_marginLeft="15dip"
+            android:background="@drawable/backarrow_white" />
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="54dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            android:background="@drawable/white_dash_round_rect_bg"
+            android:hint="Say something ..."
+            android:paddingLeft="8dip"
+            android:imeOptions="actionDone"
+            android:paddingRight="8dip"
+            android:textColorHint="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/add_hot_event_label"
+            android:layout_width="50dip"
+            android:layout_marginLeft="8dip"
+            android:layout_marginTop="32dip"
+            android:src="@drawable/hotevent"
+            android:layout_below="@id/description"
+            android:layout_height="50dip" />
+        <TextView
+            android:id="@+id/add_hot_event_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_below="@id/description"
+            android:layout_marginTop="32dip"
+            android:layout_toRightOf="@id/add_hot_event_label"
+            android:background="#457857"
+            android:gravity="center"
+            android:maxWidth="196dip"
+            android:minWidth="128dip"
+            android:paddingRight="8dip"
+            android:text="Add Hot Event"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/add_hot_point_label"
+            android:layout_width="50dip"
+            android:layout_marginLeft="8dip"
+            android:layout_marginTop="32dip"
+            android:src="@drawable/hotpoint"
+            android:layout_below="@id/add_hot_event_label"
+            android:layout_height="50dip" />
+        <TextView
+            android:id="@+id/add_hot_point_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_below="@id/add_hot_event_btn"
+            android:layout_marginTop="32dip"
+            android:background="#b33333"
+            android:layout_toRightOf="@id/add_hot_point_label"
+            android:gravity="center"
+            android:maxWidth="196dip"
+            android:paddingRight="8dip"
+            android:minWidth="128dip"
+            android:text="Add Hot Point"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/share_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:layout_gravity="bottom"
+        android:background="#28aedc"
+        android:text="Share Photo"
+        android:textColor="#fff"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+</LinearLayout>

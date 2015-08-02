@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomMapView">
+        <attr name="zoom" format="integer" />
+        <attr name="viewPortStride" format="dimension" />
+        <attr name="bitmapWidth" format="dimension" />
+        <attr name="bitmapHeight" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="stateView">
+        <attr name="spinner_drawable" format="reference" />
+        <attr name="spinner_background_drawable" format="reference" />
+        <attr name="result_drawable" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="shapeView">
+        <attr name="textSize" format="dimension" />
+        <attr name="text" format="string" />
+        <attr name="filledColor" format="color" />
+        <attr name="textColor" format="color" />
+    </declare-styleable>
+
+</resources>

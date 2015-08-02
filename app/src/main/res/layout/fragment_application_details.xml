@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/package_name" />
+
+        <TextView
+            android:id="@+id/pn_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/version_name" />
+
+        <TextView
+            android:id="@+id/vn_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/first_install_time" />
+
+        <TextView
+            android:id="@+id/fi_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/last_update_time" />
+
+        <TextView
+            android:id="@+id/lut_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/activityes" />
+
+        <TextView
+            android:id="@+id/activity_number_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/services" />
+
+        <TextView
+            android:id="@+id/services_number_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/providers" />
+
+        <TextView
+            android:id="@+id/providers_number_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/receivers" />
+
+        <TextView
+            android:id="@+id/receivers_number_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/declared_permission" />
+
+        <TextView
+            android:id="@+id/declared_permission_number_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/composeItemWrapper" >
+
+        <TextView
+            style="@style/composeItemTitle"
+            android:text="@string/requested_permission" />
+
+        <TextView
+            android:id="@+id/requested_permission_number_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</LinearLayout>

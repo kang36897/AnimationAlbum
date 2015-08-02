@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.gulu.album.NearByPhotoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp" android:layout_weight="5">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Camera is Here!"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/gallery_container"
+        android:background="#5ad7f0"
+        android:layout_height="0dp" android:layout_weight="1">
+    <Gallery
+        android:id="@+id/nearby_gallery"
+
+        android:layout_width="match_parent"
+        android:spacing="1dp"
+        android:unselectedAlpha="1.0"
+        android:layout_height="match_parent" android:gravity="fill"></Gallery>
+        <GridView
+            android:id="@+id/nearby_grid_gallery"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:numColumns="auto_fit"
+            ></GridView>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:focusable="false"
+         android:layout_height="match_parent">
+         <ImageView
+             android:id="@+id/white_triangle"
+             android:layout_marginTop="14dp"
+             android:layout_width="24dp"
+             android:layout_height="12dp"
+             android:layout_centerHorizontal="true"
+             android:src="@drawable/arr_down"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_below="@id/white_triangle"
+             android:layout_marginTop="4dp"
+             android:textSize="16sp"
+             android:text="NEARBY"
+             android:shadowColor="#c6d5da"
+             android:shadowDx="0"
+             android:shadowDy="1.5"
+             android:shadowRadius="1.5"
+             android:textColor="#fff"
+             android:textStyle="bold"
+             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+     </RelativeLayout>
+
+
+    </FrameLayout>
+</LinearLayout>

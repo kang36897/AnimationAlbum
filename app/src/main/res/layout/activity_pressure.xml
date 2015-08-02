@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:paddingBottom="16dip"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:paddingTop="16dip"
+        android:text="@string/pressure_value_format_template"
+        android:textSize="30sp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/maxRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="8dip"
+        android:text="@string/max_range_pressure_value_format_template"
+        android:textSize="16sp"
+        android:typeface="monospace" />
+
+</RelativeLayout>

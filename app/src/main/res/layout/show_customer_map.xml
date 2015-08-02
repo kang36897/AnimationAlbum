@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.gulu.album.view.CustomerMapView
+        android:id="@+id/custom_map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="horizontal"
+        map:bitmapHeight="400dip"
+        map:bitmapWidth="400dip"
+        map:viewPortStride="120dip"
+        map:zoom="6" />
+
+</LinearLayout>

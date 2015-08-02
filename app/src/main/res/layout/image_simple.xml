@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1">
+<ImageView
+    android:layout_width="20dip"
+    android:layout_height="206dp"
+    android:scaleType="centerCrop"
+    android:src="@drawable/football_girl"
+    android:layout_weight="0.51"
+     />
+
+    <TextView android:layout_width="45dp" android:layout_height="30dp"
+        android:text="10"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:paddingLeft="4dip" android:paddingRight="4dip" android:paddingTop="2dip" android:paddingBottom="2dip"
+        android:background="@drawable/red_round_corner_rect" />
+</LinearLayout>

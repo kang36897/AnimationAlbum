@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="50dip">
+<ImageView
+    android:id="@+id/hot_tag_label"
+    android:layout_width="48dip"
+    android:layout_marginLeft="10dip"
+    android:src="@drawable/hotpoint"
+    android:layout_height="48dip" />
+<TextView
+    android:id="@+id/hot_tag"
+    android:layout_width="match_parent"
+    android:paddingLeft="10dip"
+    android:gravity="left|center_vertical"
+    android:text="Little Red Hat"
+    android:textColor="#000"
+    android:textSize="18sp"
+    android:layout_height="match_parent" />
+
+</LinearLayout>

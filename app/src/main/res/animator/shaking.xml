@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially" >
+
+    <set android:ordering="together" >
+        <objectAnimator
+            android:duration="@android:integer/config_shortAnimTime"
+            android:interpolator="@android:anim/decelerate_interpolator"
+            android:propertyName="rotationX"
+            android:repeatCount="1"
+            android:repeatMode="reverse"
+            android:valueFrom="0"
+            android:valueTo="-8"
+            android:valueType="floatType" />
+        <objectAnimator
+            android:duration="@android:integer/config_shortAnimTime"
+            android:interpolator="@android:anim/decelerate_interpolator"
+            android:propertyName="rotationY"
+            android:repeatCount="1"
+            android:repeatMode="reverse"
+            android:valueFrom="0"
+            android:valueTo="-4"
+            android:valueType="floatType" />
+    </set>
+    <set android:ordering="together" >
+        <objectAnimator
+            android:duration="@android:integer/config_shortAnimTime"
+            android:interpolator="@android:anim/decelerate_interpolator"
+            android:propertyName="rotationX"
+            android:repeatCount="1"
+            android:repeatMode="reverse"
+            android:valueFrom="0"
+            android:valueTo="3"
+            android:valueType="floatType" />
+        <objectAnimator
+            android:duration="@android:integer/config_shortAnimTime"
+            android:interpolator="@android:anim/decelerate_interpolator"
+            android:propertyName="rotationY"
+            android:repeatCount="1"
+            android:repeatMode="reverse"
+            android:valueFrom="0"
+            android:valueTo="2"
+            android:valueType="floatType" />
+    </set>
+
+</set>

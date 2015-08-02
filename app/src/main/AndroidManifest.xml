@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gulu.album"
+    android:versionCode="1"
+    android:versionName="1.0.0" >
+
+    <uses-sdk
+        android:minSdkVersion="12"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <android:uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ListShowCaseActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".GooglePlusOneActivity"
+            android:label="@string/google_plus"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".ColorFulButtonActivity"
+            android:label="@string/colorful_button"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".DeviceManagerActivity"
+            android:label="@string/device_manager"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".ApplicationManagerActivity"
+            android:label="@string/application_manager"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".BuiltInSensorsActivity"
+            android:label="@string/built_in_sensors"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".ProximityActivity"
+            android:label="@string/proximity_sensor"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".PressureActivity"
+            android:label="@string/pressure_sensor"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".SendShortCutRequestActivity"
+            android:label="@string/send_creating_shortcut_request"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".ShowCustomerMapActivity"
+            android:label="@string/show_customer_map"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".TouchEventRecorderActivity"
+            android:label="@string/touch_event_recorder"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".CallOfficeAcitivity"
+            android:label="@string/call_office"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".MirrorActivity"
+            android:label="@string/my_magic_mirror"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".SpinnerProgressActivity"
+            android:label="@string/show_different_spinner"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".RotatePopupWindowActivity"
+            android:label="@string/rotate_popup_window"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".IdentifyDeviceActivity"
+            android:label="@string/identify_device"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".CustomerDialogActivity"
+            android:label="@string/cutomer_dialog"
+            android:parentActivityName=".ListShowCaseActivity"
+            android:theme="@style/MyDialogTheme" >
+        </activity>
+        <activity
+            android:name=".OnePixelActivity"
+            android:label="@string/one_pixel" >
+        </activity>
+        <activity
+            android:name=".LastestReceivedSmsActivity"
+            android:label="@string/lastest_received_sms"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".PaintActivity"
+            android:label="@string/different_paint"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+        <activity
+            android:name=".RotateActivity"
+            android:label="@string/roate_sensor"
+            android:parentActivityName=".ListShowCaseActivity" >
+        </activity>
+
+        <receiver
+            android:name=".receiver.BootCompleteReceiver"
+            android:enabled="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".service.ServantService" >
+            <intent-filter>
+                <action android:name="com.gulu.album.action_shut_down_device" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".SharePhotoActivity"
+            android:label="@string/title_activity_share_photo"
+            android:parentActivityName=".ListShowCaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gulu.album.ListShowCaseActivity" />
+        </activity>
+        <activity
+            android:name=".NearByPhotoActivity"
+            android:label="@string/title_activity_near_by_photo"
+            android:parentActivityName=".ListShowCaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gulu.album.ListShowCaseActivity" />
+        </activity>
+    </application>
+
+</manifest>

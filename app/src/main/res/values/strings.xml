@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AnimationAlbum</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="plus_one">+1</string>
+    <string name="temp_text">An IP address, or Internet Protocol address, is the unique numeric identifier attached to all devices on an IP-based network. Every client, server, and network device is assigned a unique IP address to ensure that it can send and receive data on the network without interfering or colliding with another networked device.</string>
+    <string name="google_plus">Google plus</string>
+    <string name="colorful_button">Colorful button</string>
+    <string name="device_manager">Device Manager</string>
+    <string name="application_manager">Application Manager</string>
+    <!-- fragment_application_details_begin -->
+    <string name="package_name">Package Name:</string>
+    <string name="version_name">Version Name:</string>
+    <string name="first_install_time">First Install Time:</string>
+    <string name="last_update_time">Last Update Time:</string>
+    <!-- fragment_application_details_end -->
+
+    <string name="activityes">Activityes :</string>
+    <string name="receivers">Receivers :</string>
+    <string name="services">Services :</string>
+    <string name="providers">Providers:</string>
+    <string name="requested_permission">Requested Permission:</string>
+    <string name="declared_permission">Declared Permission:</string>
+    <string name="built_in_sensors">Built In Sensors</string>
+    <string name="proximity_sensor">Proximity Sensor</string>
+    <string name="pressure_sensor">Pressure Sensor</string>
+    <string name="pressure_value_format_template">%s hPa</string>
+    <string name="max_range_pressure_value_format_template">Max : %s hPa</string>
+    <string name="send_creating_shortcut_request">Send creating shortcut request</string>
+    <string name="show_customer_map">Show customer map</string>
+    <string name="touch_event_recorder">Show touch event</string>
+    <string name="call_office">Call office app</string>
+    <string name="my_magic_mirror">My Magic Mirror</string>
+    <string name="show_different_spinner">Show different spinners</string>
+    <string name="rotate_popup_window">Rotate popup window</string>
+    <string name="identify_device">Identify device</string>
+    <string name="cutomer_dialog">Customer dialog title</string>
+    <string name="one_pixel">One pixel</string>
+    <string name="lastest_received_sms">Lastest Received Sms</string>
+    <string name="different_paint">Different Paint</string>
+
+    <string name="roate_sensor">Rotate Sensor</string>
+    <!-- http request base url  begin -->
+    <string name="map_basic_bitmap_url">http://tsp.navi168.com:3480/mapImage/mapImage3.jsp?</string>
+    <!-- http request base url  end -->
+
+    <string-array name="options_array_board">
+        <item>Copy            </item>
+        <item>Do this ...     </item>
+        <item>Do that ...     </item>
+    </string-array>
+
+    <string name="welcome">Welcome to my world!</string>
+    <string name="ok">OK</string>
+    <string name="version">版本号</string>
+    <string name="copyright">\tNavi168聆航是上海中安电子信息科技有限公司开发的手机位置社区、手机一键导航的软件；您可以通过手机拨打电话的方式获取导航服务，也可以轻松的将地址推送给好友，与好友分享自己的位置，同时支持向“聆航”车机进行位置下发、位置共享和信息交互.</string>
+    <string name="title_activity_share_photo">Share Photo</string>
+    <string name="title_activity_near_by_photo">NearBy Photo</string>
+
+</resources>

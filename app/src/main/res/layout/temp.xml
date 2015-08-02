@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dip">
+
+    <ImageView
+        android:id="@+id/FollowingUserRow_UserIconView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"
+        android:src="@drawable/football_girl2" />
+
+    <TextView
+        android:id="@+id/FollowingUserRow_TextViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/FollowingUserRow_UserIconView"
+        android:layout_marginBottom="1dip"
+        android:layout_marginLeft="4dip"
+        android:layout_toRightOf="@id/FollowingUserRow_UserIconView"
+        android:text="Dr Dooole"
+        android:textColor="#000"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/FolloingUserRow_TextViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/FollowingUserRow_TextViewTitle"
+        android:layout_below="@id/FollowingUserRow_TextViewTitle"
+        android:layout_marginBottom="2dip"
+        android:layout_toRightOf="@id/FollowingUserRow_UserIconView"
+        android:maxEms="24"
+        android:text="the computer desktop is the place"
+        android:textColor="#000"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/FollowingUserRow_TextViewCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dip"
+        android:text="2dd" />
+</RelativeLayout>
