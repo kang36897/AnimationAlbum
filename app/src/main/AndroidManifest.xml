@@ -14,10 +14,10 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <android:uses-permission
+    <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
-    <android:uses-permission
+    <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
 
@@ -168,6 +168,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gulu.album.ListShowCaseActivity" />
         </activity>
+        <activity android:name=".NewWayCircleDrawActivity"
+            android:label="@string/title_activity_new_way_circle_draw"
+            android:parentActivityName=".ListShowCaseActivity" />
     </application>
 
 </manifest>

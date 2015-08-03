@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/target_photo"
-    android:background="@drawable/football_girl"
+    android:background="@drawable/shader_football_girl_center_fill_top_bottom_clip_lr"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"

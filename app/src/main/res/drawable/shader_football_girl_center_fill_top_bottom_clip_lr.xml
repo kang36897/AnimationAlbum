@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="fill_vertical|center_horizontal|clip_horizontal"
+    android:dither="true"
+    android:filter="true"
+    android:mipMap="true"
+    android:antialias="true"
+    android:tileModeX="mirror"
+    android:tileModeY="mirror"
+    android:src="@drawable/football_girl" />
+

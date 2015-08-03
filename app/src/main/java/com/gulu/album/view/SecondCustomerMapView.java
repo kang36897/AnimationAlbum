@@ -32,7 +32,7 @@ import com.gulu.album.utils.MDataHelper;
 /**
  * Created by lulala on 31/7/15.
  */
-public class SecondCustomerMapView  extends View {
+public class SecondCustomerMapView extends View {
 
 
     static final float DEFAULT_MOVE_STRIDE = 15.0f;
@@ -171,12 +171,12 @@ public class SecondCustomerMapView  extends View {
             @Override
             public boolean onScale(ScaleGestureDetector detector) {
 
-                float scaleFactor = 0.0f;
+                float scaleFactor;
                 scaleFactor = detector.getPreviousSpan()
                         / detector.getCurrentSpan();
 
-                int nw = 0;
-                int nh = 0;
+                int nw;
+                int nh;
 
                 if (factor < 1) {
                     nh = (int) (src.height() * scaleFactor);
@@ -231,7 +231,7 @@ public class SecondCustomerMapView  extends View {
             public boolean onFling(MotionEvent e1, MotionEvent e2,
                                    float velocityX, float velocityY) {
 
-                mFlingRunnable.startUsingVelocity((int)velocityX, (int)velocityY);
+                mFlingRunnable.startUsingVelocity((int) velocityX, (int) velocityY);
                 return true;
             }
 
@@ -362,7 +362,7 @@ public class SecondCustomerMapView  extends View {
         mViewHeight = h;
         Log.d(DEBUG_TAG, "onSizeChanged()--> w = " + w + ",h=" + h + ",oldw ="
                 + oldw + ",oldh=" + oldh);
-        factor = (float)mViewWidth / (float)mViewHeight;
+        factor = (float) mViewWidth / (float) mViewHeight;
         Log.d(DEBUG_TAG, "onSizeChanged()--> scale = " + factor);
         src = new Rect(0, 0, mViewPortStride, (int) (mViewPortStride / factor));
 
@@ -371,14 +371,14 @@ public class SecondCustomerMapView  extends View {
 
     }
 
-    protected void scrollIntoSlot(){
+    protected void scrollIntoSlot() {
 
     }
 
 
     private FlingRunnable mFlingRunnable = new FlingRunnable();
 
-    private class FlingRunnable implements Runnable{
+    private class FlingRunnable implements Runnable {
 
         private int xLastFling;
         private int yLastFling;
@@ -388,22 +388,22 @@ public class SecondCustomerMapView  extends View {
             removeCallbacks(this);
         }
 
-        public void startUsingVelocity(int xVelocity,int yVelocity){
-            if(xVelocity == 0 && yVelocity == 0){
+        public void startUsingVelocity(int xVelocity, int yVelocity) {
+            if (xVelocity == 0 && yVelocity == 0) {
                 return;
             }
             startCommon();
             xLastFling = xVelocity < 0 ? Integer.MAX_VALUE : 0;
             yLastFling = yVelocity < 0 ? Integer.MAX_VALUE : 0;
 
-            mScroller.fling(xLastFling, yLastFling, xVelocity, yVelocity, 0, Integer.MAX_VALUE, 0 , Integer.MAX_VALUE);
+            mScroller.fling(xLastFling, yLastFling, xVelocity, yVelocity, 0, Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
             post(this);
 
         }
 
 
-        public void startUsingDistance(int xDistance, int yDistance){
-            if(xDistance == 0 && yDistance == 0){
+        public void startUsingDistance(int xDistance, int yDistance) {
+            if (xDistance == 0 && yDistance == 0) {
                 return;
             }
             startCommon();
@@ -414,12 +414,12 @@ public class SecondCustomerMapView  extends View {
             post(this);
         }
 
-        public void stop(boolean scrollIntoSlot){
+        public void stop(boolean scrollIntoSlot) {
             removeCallbacks(this);
 
             mScroller.forceFinished(true);
 
-            if(scrollIntoSlot){
+            if (scrollIntoSlot) {
                 scrollIntoSlot();
             }
         }
@@ -427,7 +427,7 @@ public class SecondCustomerMapView  extends View {
         @Override
         public void run() {
 
-            if(mScroller.isFinished()){
+            if (mScroller.isFinished()) {
                 return;
             }
 
@@ -438,15 +438,17 @@ public class SecondCustomerMapView  extends View {
             moveViewport();
 
 
-            if(more){
+            if (more) {
                 post(this);
-            }else{
+            } else {
                 mScroller.forceFinished(true);
             }
 
 
         }
-    };
+    }
+
+
 
     public void computeOriginOfText(float[] position, float[] origin,
                                     boolean isCenter) {
@@ -474,14 +476,14 @@ public class SecondCustomerMapView  extends View {
 
         boolean handled = false;
 
-        handled = handled | mNormalGestureDetector.onTouchEvent(event)
-                | mScaleGestureDetector.onTouchEvent(event);
+        handled = handled || mNormalGestureDetector.onTouchEvent(event)
+                ||  mScaleGestureDetector.onTouchEvent(event);
 
         return handled;
 
     }
 
-    protected void moveViewport(){
+    protected void moveViewport() {
 
     }
 

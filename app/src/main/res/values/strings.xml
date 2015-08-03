@@ -58,5 +58,6 @@
     <string name="copyright">\tNavi168聆航是上海中安电子信息科技有限公司开发的手机位置社区、手机一键导航的软件；您可以通过手机拨打电话的方式获取导航服务，也可以轻松的将地址推送给好友，与好友分享自己的位置，同时支持向“聆航”车机进行位置下发、位置共享和信息交互.</string>
     <string name="title_activity_share_photo">Share Photo</string>
     <string name="title_activity_near_by_photo">NearBy Photo</string>
+    <string name="title_activity_new_way_circle_draw">New way To draw Circle Image</string>
 
 </resources>

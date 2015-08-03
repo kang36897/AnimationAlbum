@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/shader_football_girl"
     android:orientation="horizontal"
     tools:context=".PaintActivity" >
 
@@ -16,7 +17,7 @@
         android:minHeight="90dip"
         android:layout_width="120dip"
         android:layout_height="120dip"
-       />
+         />
 
     <view
         class="com.gulu.album.view.CanvasView"
