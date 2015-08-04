@@ -3,6 +3,7 @@ package com.gulu.album;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -36,6 +37,8 @@ public class NewWayCircleDrawActivity extends BaseActivity {
 
                 int vw = dstRect.width();
                 int vh = dstRect.height();
+
+                Matrix mShaderMatrix = new Matrix();
 
 
                 float size;
@@ -88,6 +91,8 @@ public class NewWayCircleDrawActivity extends BaseActivity {
                     dx = (vw - acw) * 0.5f;
                 }
 
+                mShaderMatrix.setScale(scale, scale);
+
                 // offset of the center of shader relative to the image
                 aOffsetX = (acw - size) * 0.5f;
                 aOffsetY = (ach - size) * 0.5f;
@@ -100,13 +105,17 @@ public class NewWayCircleDrawActivity extends BaseActivity {
                 dy = Math.max(dy + aOffsetY, 0);
                 dx = Math.max(dx + aOffsetX, 0);
 
+                mShaderMatrix.postTranslate(dx, dy);
+
                 size = Math.min(dw, dh);
                 canvas.save();
                 canvas.translate(outRect.left, outRect.top);
 
 
+                shaderPaint.getShader().setLocalMatrix(mShaderMatrix);
+                canvas.drawOval(new RectF(0, 0, vw, vh), shaderPaint);
 
-                canvas.save();
+                /*canvas.save();
                 canvas.scale(scale, scale);
                 canvas.translate((int) (dx + 0.5f), (int) (dy + 0.5f));
 
@@ -116,7 +125,7 @@ public class NewWayCircleDrawActivity extends BaseActivity {
                 //canvas.drawCircle(size * 0.5f, size * 0.5f, size * 0.5f, shaderPaint);
 
                 canvas.restore();
-
+*/
 
                 canvas.restore();
 

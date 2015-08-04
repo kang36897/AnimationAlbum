@@ -175,10 +175,10 @@ public class SBitmapDrawable extends Drawable {
                     Rect dstRect = new Rect();
                     copyBounds(dstRect);
                     if (mApplyGravity) {
-                        mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, mBitmapWidth, mBitmapHeight, dstRect, mTargetDensity, state.mGravity);
+                        mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, state.mBitmap.getWidth(), state.mBitmap.getHeight(), dstRect, mTargetDensity, state.mGravity);
                         mApplyGravity = false;
                     } else {
-                        mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, mBitmapWidth, mBitmapHeight, dstRect, mTargetDensity, Gravity.CENTER);
+                        mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, state.mBitmap.getWidth(), state.mBitmap.getHeight(),dstRect, mTargetDensity, Gravity.CENTER);
                     }
 
                 }
