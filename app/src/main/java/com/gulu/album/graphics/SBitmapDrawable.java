@@ -155,10 +155,9 @@ public class SBitmapDrawable extends Drawable {
                     canvas.restore();
                 }
             } else {
-                if (mApplyGravity) {
-                    copyBounds(mDstRect);
-                    mApplyGravity = false;
-                }
+
+                copyBounds(mDstRect);
+
                 if (needMirroring) {
                     // Mirror the bitmap
                     updateMirrorMatrix(mDstRect.right - mDstRect.left);
@@ -170,12 +169,18 @@ public class SBitmapDrawable extends Drawable {
                     }
                 }
 
-                if(mDrawOperationWithShader == null){
+                if (mDrawOperationWithShader == null) {
                     canvas.drawRect(mDstRect, state.mPaint);
-                }else{
+                } else {
                     Rect dstRect = new Rect();
                     copyBounds(dstRect);
-                    mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, mBitmapWidth, mBitmapHeight, dstRect);
+                    if (mApplyGravity) {
+                        mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, mBitmapWidth, mBitmapHeight, dstRect, mTargetDensity, state.mGravity);
+                        mApplyGravity = false;
+                    } else {
+                        mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, mBitmapWidth, mBitmapHeight, dstRect, mTargetDensity, Gravity.CENTER);
+                    }
+
                 }
             }
         }
@@ -191,8 +196,8 @@ public class SBitmapDrawable extends Drawable {
 
     private DrawOperationWithShader mDrawOperationWithShader;
 
-    public  interface DrawOperationWithShader{
-        public void doDrawOperation(Canvas canvas,Paint shaderPaint,int bitmapWidth, int bitmapHeight, Rect dstRect);
+    public interface DrawOperationWithShader {
+         void doDrawOperation(Canvas canvas, Paint shaderPaint, int bitmapWidth, int bitmapHeight, Rect dstRect, int desity, int gravity);
     }
 
     public boolean isAutoMirrored() {
