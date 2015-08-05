@@ -155,8 +155,10 @@ public class SBitmapDrawable extends Drawable {
                     canvas.restore();
                 }
             } else {
-
-                copyBounds(mDstRect);
+                if (mApplyGravity) {
+                    copyBounds(mDstRect);
+                    mApplyGravity = false;
+                }
 
                 if (needMirroring) {
                     // Mirror the bitmap
@@ -174,12 +176,7 @@ public class SBitmapDrawable extends Drawable {
                 } else {
                     Rect dstRect = new Rect();
                     copyBounds(dstRect);
-                    if (mApplyGravity) {
-                        mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, state.mBitmap.getWidth(), state.mBitmap.getHeight(), dstRect, mTargetDensity, state.mGravity);
-                        mApplyGravity = false;
-                    } else {
-                        mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, state.mBitmap.getWidth(), state.mBitmap.getHeight(),dstRect, mTargetDensity, Gravity.CENTER);
-                    }
+                    mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, state.mBitmap.getWidth(), state.mBitmap.getHeight(), dstRect, mTargetDensity, state.mGravity, state.mImageSlice);
 
                 }
             }
@@ -194,15 +191,35 @@ public class SBitmapDrawable extends Drawable {
         this.mDrawOperationWithShader = mDrawOperationWithShader;
     }
 
+    private ImageSlice mImageSlice;
+    public void setImageSliceToBeShader(ImageSlice imageSlice){
+        ImageSlice old = mBitmapState.mImageSlice;
+        if(old == imageSlice){
+          return;
+        }
+
+        mBitmapState.mImageSlice = imageSlice;
+        invalidateSelf();
+    }
+
+
+    public enum ImageSlice{
+        HEAD, MIDDLE, TAIL
+    }
+
+
     private DrawOperationWithShader mDrawOperationWithShader;
 
     public interface DrawOperationWithShader {
-         void doDrawOperation(Canvas canvas, Paint shaderPaint, int bitmapWidth, int bitmapHeight, Rect dstRect, int desity, int gravity);
+        void doDrawOperation(Canvas canvas, Paint shaderPaint, int bitmapWidth, int bitmapHeight, Rect dstRect, int desity, int gravity, ImageSlice mImageSlice);
     }
 
     public boolean isAutoMirrored() {
         return mBitmapState.mAutoMirrored;
     }
+
+
+
 
 
     private boolean needMirroring() {
@@ -353,6 +370,7 @@ public class SBitmapDrawable extends Drawable {
         int mTargetDensity = DisplayMetrics.DENSITY_DEFAULT;
         public boolean mRebuildShader;
         public boolean mAutoMirrored;
+        public ImageSlice mImageSlice = ImageSlice.HEAD;
 
 
         public SBitmapState(SBitmapState bitmapState) {
