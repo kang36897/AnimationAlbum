@@ -56,7 +56,7 @@ public class SBitmapDrawable extends Drawable {
 
 
     public Paint getPaint() {
-        return mBitmapState.mPaint;
+        return mBitmapState.mShaderPaint;
     }
 
     public void setTargetDensity(Canvas canvas) {
@@ -71,11 +71,13 @@ public class SBitmapDrawable extends Drawable {
             }
             invalidateSelf();
         }
+
+
     }
 
 
     public void setAntiAlias(boolean aa) {
-        mBitmapState.mPaint.setAntiAlias(aa);
+        mBitmapState.mShaderPaint.setAntiAlias(aa);
         invalidateSelf();
     }
 
@@ -111,7 +113,7 @@ public class SBitmapDrawable extends Drawable {
 
 
     public boolean hasAntiAlias() {
-        return mBitmapState.mPaint.isAntiAlias();
+        return mBitmapState.mShaderPaint.isAntiAlias();
     }
 
     @Override
@@ -125,9 +127,9 @@ public class SBitmapDrawable extends Drawable {
                 Shader.TileMode tmy = state.mTileModeY;
 
                 if (tmx == null && tmy == null) {
-                    state.mPaint.setShader(null);
+                    state.mShaderPaint.setShader(null);
                 } else {
-                    state.mPaint.setShader(new BitmapShader(bitmap,
+                    state.mShaderPaint.setShader(new BitmapShader(bitmap,
                             tmx == null ? Shader.TileMode.CLAMP : tmx,
                             tmy == null ? Shader.TileMode.CLAMP : tmy));
                 }
@@ -135,7 +137,7 @@ public class SBitmapDrawable extends Drawable {
                 copyBounds(mDstRect);
             }
 
-            Shader shader = state.mPaint.getShader();
+            Shader shader = state.mShaderPaint.getShader();
             final boolean needMirroring = needMirroring();
             if (shader == null) {
                 if (mApplyGravity) {
@@ -150,7 +152,7 @@ public class SBitmapDrawable extends Drawable {
                     canvas.translate(mDstRect.right - mDstRect.left, 0);
                     canvas.scale(-1.0f, 1.0f);
                 }
-                canvas.drawBitmap(bitmap, null, mDstRect, state.mPaint);
+                canvas.drawBitmap(bitmap, null, mDstRect, state.mShaderPaint);
                 if (needMirroring) {
                     canvas.restore();
                 }
@@ -172,11 +174,11 @@ public class SBitmapDrawable extends Drawable {
                 }
 
                 if (mDrawOperationWithShader == null) {
-                    canvas.drawRect(mDstRect, state.mPaint);
+                    canvas.drawRect(mDstRect, state.mShaderPaint);
                 } else {
                     Rect dstRect = new Rect();
                     copyBounds(dstRect);
-                    mDrawOperationWithShader.doDrawOperation(canvas, state.mPaint, state.mBitmap.getWidth(), state.mBitmap.getHeight(), dstRect, mTargetDensity, state.mGravity, state.mImageSlice);
+                    mDrawOperationWithShader.doDrawOperation(canvas, state.mShaderPaint, state.mBitmap.getWidth(), state.mBitmap.getHeight(), dstRect, mTargetDensity, state.mGravity, state.mImageSlice, state.mBorderPaint, state.mBorderSize);
 
                 }
             }
@@ -211,7 +213,7 @@ public class SBitmapDrawable extends Drawable {
     private DrawOperationWithShader mDrawOperationWithShader;
 
     public interface DrawOperationWithShader {
-        void doDrawOperation(Canvas canvas, Paint shaderPaint, int bitmapWidth, int bitmapHeight, Rect dstRect, int desity, int gravity, ImageSlice mImageSlice);
+        void doDrawOperation(Canvas canvas, Paint shaderPaint, int bitmapWidth, int bitmapHeight, Rect dstRect, int desity, int gravity, ImageSlice mImageSlice, Paint borderPaint,float borderSize);
     }
 
     public boolean isAutoMirrored() {
@@ -239,7 +241,7 @@ public class SBitmapDrawable extends Drawable {
     protected void onBoundsChange(Rect bounds) {
         super.onBoundsChange(bounds);
         mApplyGravity = true;
-        Shader shader = mBitmapState.mPaint.getShader();
+        Shader shader = mBitmapState.mShaderPaint.getShader();
         if (shader != null) {
             if (needMirroring()) {
                 updateMirrorMatrix(bounds.right - bounds.left);
@@ -256,32 +258,32 @@ public class SBitmapDrawable extends Drawable {
 
     @Override
     public int getAlpha() {
-        return mBitmapState.mPaint.getAlpha();
+        return mBitmapState.mShaderPaint.getAlpha();
     }
 
     @Override
     public void setAlpha(int alpha) {
-        int oldAlpha = mBitmapState.mPaint.getAlpha();
+        int oldAlpha = mBitmapState.mShaderPaint.getAlpha();
         if (alpha != oldAlpha) {
-            mBitmapState.mPaint.setAlpha(alpha);
+            mBitmapState.mShaderPaint.setAlpha(alpha);
             invalidateSelf();
         }
     }
 
     public void setXfermode(Xfermode xfermode) {
-        mBitmapState.mPaint.setXfermode(xfermode);
+        mBitmapState.mShaderPaint.setXfermode(xfermode);
         invalidateSelf();
     }
 
     @Override
     public void setFilterBitmap(boolean filter) {
-        mBitmapState.mPaint.setFilterBitmap(filter);
+        mBitmapState.mShaderPaint.setFilterBitmap(filter);
         invalidateSelf();
     }
 
     @Override
     public void setDither(boolean dither) {
-        mBitmapState.mPaint.setDither(dither);
+        mBitmapState.mShaderPaint.setDither(dither);
         invalidateSelf();
     }
 
@@ -336,7 +338,7 @@ public class SBitmapDrawable extends Drawable {
 
     @Override
     public void setColorFilter(ColorFilter cf) {
-        mBitmapState.mPaint.setColorFilter(cf);
+        mBitmapState.mShaderPaint.setColorFilter(cf);
         invalidateSelf();
     }
 
@@ -358,15 +360,47 @@ public class SBitmapDrawable extends Drawable {
 
     }
 
+    public void setBorderSize(int borderSize) {
+
+
+        ensureBorderPaint();
+        mBitmapState.mBorderSize = (int) ((mBitmapState.mDisplayMetric== null ? 1 : mBitmapState.mDisplayMetric.density) * borderSize);
+        mBitmapState.mBorderPaint.setStrokeWidth(mBitmapState.mBorderSize);
+        invalidateSelf();
+    }
+
+    private void ensureBorderPaint() {
+        if(mBitmapState.mBorderPaint == null){
+            Paint temp = new Paint();
+            temp.setAntiAlias(true);
+            temp.setStyle(Paint.Style.STROKE);
+            mBitmapState.mBorderPaint = temp;
+
+        }
+    }
+
+
+    public void setBorderColor(int color) {
+        ensureBorderPaint();
+        mBitmapState.mBorderColor = color;
+        mBitmapState.mBorderPaint.setColor(color);
+        invalidateSelf();
+    }
+
     public static class SBitmapState extends ConstantState {
 
 
         Bitmap mBitmap;
         int mChangingConfigurations;
         public int mGravity = Gravity.FILL;
-        Paint mPaint = new Paint(DEFAULT_PAINT_FLAGS);
+        Paint mShaderPaint = new Paint(DEFAULT_PAINT_FLAGS);
+        Paint mBorderPaint;
+        int mBorderSize;
+        int mBorderColor;
+        DisplayMetrics mDisplayMetric;
         Shader.TileMode mTileModeX = null;
         Shader.TileMode mTileModeY = null;
+
         int mTargetDensity = DisplayMetrics.DENSITY_DEFAULT;
         public boolean mRebuildShader;
         public boolean mAutoMirrored;
@@ -380,9 +414,11 @@ public class SBitmapDrawable extends Drawable {
             mTileModeX = bitmapState.mTileModeX;
             mTileModeY = bitmapState.mTileModeY;
             mTargetDensity = bitmapState.mTargetDensity;
-            mPaint = new Paint(bitmapState.mPaint);
+            mShaderPaint = new Paint(bitmapState.mShaderPaint);
             mRebuildShader = bitmapState.mRebuildShader;
             mAutoMirrored = bitmapState.mAutoMirrored;
+            mDisplayMetric = bitmapState.mDisplayMetric;
+
         }
 
 
@@ -407,6 +443,7 @@ public class SBitmapDrawable extends Drawable {
         mBitmapState = state;
         if (res != null) {
             mTargetDensity = res.getDisplayMetrics().densityDpi;
+            mBitmapState.mDisplayMetric = res.getDisplayMetrics();
         } else {
             mTargetDensity = state.mTargetDensity;
         }

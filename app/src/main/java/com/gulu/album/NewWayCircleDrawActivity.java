@@ -36,7 +36,7 @@ public class NewWayCircleDrawActivity extends BaseActivity {
 
         DrawOperationWithShader operationWithShader = new DrawOperationWithShader() {
             @Override
-            public void doDrawOperation(Canvas canvas, Paint shaderPaint, int dw, int dh, Rect dstRect, int desity , int gravity, ImageSlice imageSlice) {
+            public void doDrawOperation(Canvas canvas, Paint shaderPaint, int dw, int dh, Rect dstRect, int desity , int gravity, ImageSlice imageSlice, Paint borderPaint, float borderSize) {
 
                 int vw = dstRect.width();
                 int vh = dstRect.height();
@@ -141,12 +141,25 @@ public class NewWayCircleDrawActivity extends BaseActivity {
 
 
                 shaderPaint.getShader().setLocalMatrix(mShaderMatrix);
-                canvas.drawOval(new RectF(0, 0, vw, vh), shaderPaint);
+                RectF oval = new RectF(0, 0, vw, vh);
 
+
+
+                canvas.drawOval(oval, shaderPaint);
+                if (borderSize > 0 ) {
+                    oval.inset(borderSize * 0.5f, borderSize/2);
+                    canvas.drawOval(oval, borderPaint);
+
+                }
 
 
                 canvas.restore();
 
+                /*if (borderSize > 0 ) {
+                    outRect.inset((int)(borderSize * 0.5f), (int)(borderSize/2));
+                    canvas.drawOval(new RectF(outRect), borderPaint);
+
+                }*/
             }
         };
 
@@ -174,6 +187,8 @@ public class NewWayCircleDrawActivity extends BaseActivity {
         drawable.setTileModeXY(Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         drawable.setImageSliceToBeShader(ImageSlice.HEAD);
         drawable.setAntiAlias(true);
+        drawable.setBorderSize(2);
+        drawable.setBorderColor(Color.CYAN);
         drawable.setDither(true);
         drawable.setmDrawOperationWithShader(operationWithShader);
         mTest3.setImageDrawable(drawable);
@@ -182,6 +197,8 @@ public class NewWayCircleDrawActivity extends BaseActivity {
         drawable = new SBitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.football_girl));
         drawable.setTileModeXY(Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         drawable.setGravity(Gravity.RIGHT);
+        drawable.setBorderColor(Color.WHITE);
+        drawable.setBorderSize(2);
         drawable.setAntiAlias(true);
         drawable.setDither(true);
         drawable.setmDrawOperationWithShader(operationWithShader);
