@@ -8,6 +8,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Xfermode;
 import android.graphics.drawable.Drawable;
@@ -194,10 +195,11 @@ public class SBitmapDrawable extends Drawable {
     }
 
     private ImageSlice mImageSlice;
-    public void setImageSliceToBeShader(ImageSlice imageSlice){
+
+    public void setImageSliceToBeShader(ImageSlice imageSlice) {
         ImageSlice old = mBitmapState.mImageSlice;
-        if(old == imageSlice){
-          return;
+        if (old == imageSlice) {
+            return;
         }
 
         mBitmapState.mImageSlice = imageSlice;
@@ -205,7 +207,7 @@ public class SBitmapDrawable extends Drawable {
     }
 
 
-    public enum ImageSlice{
+    public enum ImageSlice {
         HEAD, MIDDLE, TAIL
     }
 
@@ -213,15 +215,12 @@ public class SBitmapDrawable extends Drawable {
     private DrawOperationWithShader mDrawOperationWithShader;
 
     public interface DrawOperationWithShader {
-        void doDrawOperation(Canvas canvas, Paint shaderPaint, int bitmapWidth, int bitmapHeight, Rect dstRect, int desity, int gravity, ImageSlice mImageSlice, Paint borderPaint,float borderSize);
+        void doDrawOperation(Canvas canvas, Paint shaderPaint, int bitmapWidth, int bitmapHeight, Rect dstRect, int desity, int gravity, ImageSlice mImageSlice, Paint borderPaint, float borderSize);
     }
 
     public boolean isAutoMirrored() {
         return mBitmapState.mAutoMirrored;
     }
-
-
-
 
 
     private boolean needMirroring() {
@@ -364,13 +363,13 @@ public class SBitmapDrawable extends Drawable {
 
 
         ensureBorderPaint();
-        mBitmapState.mBorderSize = (int) ((mBitmapState.mDisplayMetric== null ? 1 : mBitmapState.mDisplayMetric.density) * borderSize);
+        mBitmapState.mBorderSize = (int) ((mBitmapState.mDisplayMetric == null ? 1 : mBitmapState.mDisplayMetric.density) * borderSize);
         mBitmapState.mBorderPaint.setStrokeWidth(mBitmapState.mBorderSize);
         invalidateSelf();
     }
 
     private void ensureBorderPaint() {
-        if(mBitmapState.mBorderPaint == null){
+        if (mBitmapState.mBorderPaint == null) {
             Paint temp = new Paint();
             temp.setAntiAlias(true);
             temp.setStyle(Paint.Style.STROKE);
@@ -449,6 +448,138 @@ public class SBitmapDrawable extends Drawable {
         }
         setBitmap(state != null ? state.mBitmap : null);
         computeBitmapSize();
+
+    }
+
+
+    public static class DrawCircleImageWithShader implements DrawOperationWithShader {
+
+        @Override
+        public void doDrawOperation(Canvas canvas, Paint shaderPaint, int bitmapWidth, int bitmapHeight, Rect dstRect, int desity, int gravity, ImageSlice imageSlice, Paint borderPaint, float borderSize) {
+
+
+            int vw = dstRect.width();
+            int vh = dstRect.height();
+
+            Matrix mShaderMatrix = new Matrix();
+
+            float size;
+
+            float scale;
+            float dx = 0;
+            float dy = 0;
+
+            // the width and height of bitmap after projected into the view coordinate
+            float acw;
+            float ach;
+            float aOffsetX = 0;
+            float aOffsetY = 0;
+
+            // compute the container , Because the image will be in a circle , the width and height of container should be equal.
+            vw = Math.min(vw, vh);
+            vh = vw;
+
+            Rect outRect = new Rect();
+            Gravity.apply(gravity, vw, vh, dstRect, outRect);
+
+            if (bitmapWidth * vh < vw * bitmapHeight) {
+                //the width is equal after projection
+                scale = (float) vw / (float) bitmapWidth;
+                acw = vw;
+
+                // after the projection the drawable 's height
+                ach = bitmapHeight * scale;
+
+                // the circle size after the projection
+                size = Math.min(acw, ach);
+
+                // use the smallest side as the size of circle
+                //size = Math.min(vh, size);
+
+                dy = (vh - ach) * 0.5f;
+
+            } else {
+                // the height is equal after projection
+                scale = (float) vh / (float) bitmapHeight;
+
+                ach = vh;
+                acw = bitmapWidth * scale;
+                // the circle size after the projection
+                size = Math.min(acw, ach);
+
+                // use the smallest side as the size of circle
+                // size = Math.min(vh, size);
+
+                dx = (vw - acw) * 0.5f;
+            }
+
+            mShaderMatrix.setScale(scale, scale);
+
+            switch (imageSlice) {
+
+                case HEAD:
+                    /**
+                     *   if you want the head part of this image to be the shader,just use the follow codes:
+                     */
+                    aOffsetX = (acw - size) * 0.5f;
+                    aOffsetY = (ach - size) * 0.5f;
+                    break;
+
+                case TAIL:
+                    /**
+                     *  if you want the tail part of thie image to be the shader ,just use the follow codes:
+                     */
+                    aOffsetX = (size - acw) * 0.5f;
+                    aOffsetY = (size - ach) * 0.5f;
+                    break;
+
+                // offset of the center of shader relative to the image
+                /** if (aOffsetX == 0 && aOffsetY == 0) ,the center of the shader  is in the center of image.
+                 * So the center part of this image will be used as shader;
+                 *
+                 */
+                default:
+                case MIDDLE:
+                    aOffsetX = 0;
+                    aOffsetY = 0;
+                    break;
+            }
+
+
+            //Note, the center of bitmap is equal to the center of view.
+
+            // if the height of the bitmap is larger than the height of view after transformed to the view coordinate,
+            // adjust the dy offset to 0
+            dy = dy + aOffsetY;
+            dx = dx + aOffsetX;
+
+            mShaderMatrix.postTranslate(dx, dy);
+
+
+            canvas.save();
+            canvas.translate(outRect.left, outRect.top);
+
+
+            shaderPaint.getShader().setLocalMatrix(mShaderMatrix);
+            RectF oval = new RectF(0, 0, vw, vh);
+
+
+            canvas.drawOval(oval, shaderPaint);
+            if (borderSize > 0) {
+                oval.inset(borderSize * 0.5f, borderSize / 2);
+                canvas.drawOval(oval, borderPaint);
+
+            }
+
+
+            canvas.restore();
+
+                /*if (borderSize > 0 ) {
+                    outRect.inset((int)(borderSize * 0.5f), (int)(borderSize/2));
+                    canvas.drawOval(new RectF(outRect), borderPaint);
+
+                }*/
+        }
 
     }
 }

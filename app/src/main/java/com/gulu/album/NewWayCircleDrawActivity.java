@@ -36,7 +36,9 @@ public class NewWayCircleDrawActivity extends BaseActivity {
 
         DrawOperationWithShader operationWithShader = new DrawOperationWithShader() {
             @Override
-            public void doDrawOperation(Canvas canvas, Paint shaderPaint, int dw, int dh, Rect dstRect, int desity , int gravity, ImageSlice imageSlice, Paint borderPaint, float borderSize) {
+            public void doDrawOperation(Canvas canvas, Paint shaderPaint, int dw, int dh,
+                                        Rect dstRect, int desity, int gravity,
+                                        ImageSlice imageSlice, Paint borderPaint, float borderSize) {
 
                 int vw = dstRect.width();
                 int vh = dstRect.height();
@@ -56,7 +58,7 @@ public class NewWayCircleDrawActivity extends BaseActivity {
                 float aOffsetY = 0;
 
                 // compute the container , Because the image will be in a circle , the width and height of container should be equal.
-                vw = Math.min(vw,vh);
+                vw = Math.min(vw, vh);
                 vh = vw;
 
                 Rect outRect = new Rect();
@@ -88,21 +90,21 @@ public class NewWayCircleDrawActivity extends BaseActivity {
                     size = Math.min(acw, ach);
 
                     // use the smallest side as the size of circle
-                   // size = Math.min(vh, size);
+                    // size = Math.min(vh, size);
 
                     dx = (vw - acw) * 0.5f;
                 }
 
                 mShaderMatrix.setScale(scale, scale);
 
-                switch(imageSlice){
+                switch (imageSlice) {
 
                     case HEAD:
                         /**
                          *   if you want the head part of this image to be the shader,just use the follow codes:
-                          */
+                         */
                         aOffsetX = (acw - size) * 0.5f;
-                        aOffsetY = (ach - size ) * 0.5f;
+                        aOffsetY = (ach - size) * 0.5f;
                         break;
 
                     case TAIL:
@@ -144,10 +146,9 @@ public class NewWayCircleDrawActivity extends BaseActivity {
                 RectF oval = new RectF(0, 0, vw, vh);
 
 
-
                 canvas.drawOval(oval, shaderPaint);
-                if (borderSize > 0 ) {
-                    oval.inset(borderSize * 0.5f, borderSize/2);
+                if (borderSize > 0) {
+                    oval.inset(borderSize * 0.5f, borderSize / 2);
                     canvas.drawOval(oval, borderPaint);
 
                 }

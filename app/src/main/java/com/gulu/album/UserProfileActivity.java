@@ -1,9 +1,13 @@
 package com.gulu.album;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.gulu.album.graphics.SBitmapDrawable;
 import com.gulu.album.view.HeaderGridView;
 
 import java.util.Arrays;
@@ -25,13 +30,15 @@ public class UserProfileActivity extends BaseActivity {
     private final static Integer[] DATA = new Integer[]{
             R.drawable.football_girl, R.drawable.sword_girl, R.drawable.flower_girl,
             R.drawable.feeling_gril, R.drawable.boobs_girl,
-            R.drawable.pink_girl
+            R.drawable.pink_girl, R.drawable.max_girl, R.drawable.nice_boobs,
+            R.drawable.zhangmin1, R.drawable.zhangmin2
     };
 
     private HeaderGridView mPhotoGallery;
-    private PhotoAdapter mPhotoAdapter ;
+    private PhotoAdapter mPhotoAdapter;
 
     private View mProfileHeader;
+    private ImageView mUserThumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +48,23 @@ public class UserProfileActivity extends BaseActivity {
         mPhotoGallery = (HeaderGridView) findViewById(R.id.photo_gallery);
 
         mProfileHeader = getLayoutInflater().inflate(R.layout.component_user_profile_header, mPhotoGallery, false);
+        mUserThumbnail = (ImageView) mProfileHeader.findViewById(R.id.user_thumbnail);
+        SBitmapDrawable drawable = new SBitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.football_girl));
+        drawable.setTileModeXY(Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        drawable.setBorderColor(Color.WHITE);
+        drawable.setBorderSize(2);
+        drawable.setAntiAlias(true);
+        drawable.setDither(true);
+        drawable.setmDrawOperationWithShader(new SBitmapDrawable.DrawCircleImageWithShader());
+        mUserThumbnail.setImageDrawable(drawable);
+
         mPhotoGallery.addHeaderView(mProfileHeader);
 
         mPhotoGallery.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 mPhotoGallery.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int columnSize = (mPhotoGallery.getWidth() - mPhotoGallery.getPaddingLeft() - mPhotoGallery.getPaddingRight())/ mPhotoGallery.getNumColumns();
+                int columnSize = (mPhotoGallery.getWidth() - mPhotoGallery.getPaddingLeft() - mPhotoGallery.getPaddingRight()) / mPhotoGallery.getNumColumns();
                 mPhotoGallery.setColumnWidth(columnSize);
                 mPhotoAdapter = new PhotoAdapter(getBaseContext(), Arrays.asList(DATA), columnSize);
                 mPhotoGallery.setAdapter(mPhotoAdapter);
@@ -127,8 +144,8 @@ public class UserProfileActivity extends BaseActivity {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
-            }else{
-                imageView =(ImageView) convertView;
+            } else {
+                imageView = (ImageView) convertView;
             }
 
 
@@ -139,5 +156,7 @@ public class UserProfileActivity extends BaseActivity {
 
             return imageView;
         }
+
+
     }
 }

@@ -63,7 +63,7 @@ public class HeaderGridView extends GridView {
     private ArrayList<FixedViewInfo> mHeaderViewInfos = new ArrayList<FixedViewInfo>();
 
     private void initHeaderGridView() {
-        super.setClipChildren(false);
+
     }
 
     public HeaderGridView(Context context) {
@@ -90,10 +90,7 @@ public class HeaderGridView extends GridView {
         }
     }
 
-    @Override
-    public void setClipChildren(boolean clipChildren) {
-        // Ignore, since the header rows depend on not being clipped
-    }
+
 
     /**
      * Add a fixed view to appear at the top of the grid. If addHeaderView is
