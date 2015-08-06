@@ -59,5 +59,6 @@
     <string name="title_activity_share_photo">Share Photo</string>
     <string name="title_activity_near_by_photo">NearBy Photo</string>
     <string name="title_activity_new_way_circle_draw">New way To draw Circle Image</string>
+    <string name="title_activity_user_profile">User Profile</string>
 
 </resources>
