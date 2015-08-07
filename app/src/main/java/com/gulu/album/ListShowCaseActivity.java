@@ -41,7 +41,7 @@ public class ListShowCaseActivity extends Activity {
 			int index = 0;
 			mItemData = new String[size];
 			mAcivityInfoArray = new ActivityInfo[size];
-			for (int i = 0; i < tempAcivityInfoArray.length; i++) {
+			for (int i = tempAcivityInfoArray.length - 1; i >= 0 ; i--) {
 				if (tempAcivityInfoArray[i].name.contains(getLocalClassName())) {
 					continue;
 				}
@@ -58,6 +58,8 @@ public class ListShowCaseActivity extends Activity {
 				mItemData[index] = getResources().getString(resId);
 				index++;
 			}
+
+
 			
 			mListView.setAdapter(new ArrayAdapter<String>(this,
 					android.R.layout.simple_list_item_1, mItemData));

@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.gulu.album.graphics.ResourceDrawable;
 import com.gulu.album.graphics.SBitmapDrawable;
 import com.gulu.album.view.HeaderGridView;
 
@@ -39,6 +41,7 @@ public class UserProfileActivity extends BaseActivity {
 
     private View mProfileHeader;
     private ImageView mUserThumbnail;
+    private Button mFollowingBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,13 @@ public class UserProfileActivity extends BaseActivity {
         drawable.setDither(true);
         drawable.setmDrawOperationWithShader(new SBitmapDrawable.DrawCircleImageWithShader());
         mUserThumbnail.setImageDrawable(drawable);
+        mFollowingBtn = (Button) mProfileHeader.findViewById(R.id.following_btn);
+        mFollowingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         mPhotoGallery.addHeaderView(mProfileHeader);
 
@@ -142,6 +152,7 @@ public class UserProfileActivity extends BaseActivity {
                         mColumSize));
                 imageView.setAdjustViewBounds(false);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setBackground(new ColorDrawable(Color.GREEN));
 
 
             } else {
@@ -150,9 +161,15 @@ public class UserProfileActivity extends BaseActivity {
 
 
             //imageView.setImageDrawable(new ColorDrawable(Color.BLUE));
+            ResourceDrawable resourceDrawable;
+            if(imageView.getDrawable() != null && imageView.getDrawable() instanceof  ResourceDrawable){
+                resourceDrawable = (ResourceDrawable) imageView.getDrawable();
+            }else{
+                resourceDrawable = new ResourceDrawable(mContext.getResources());
+                imageView.setImageDrawable(resourceDrawable);
+            }
 
-            imageView.setImageResource(mData.get(position));
-
+            resourceDrawable.setImage(mData.get(position));
 
             return imageView;
         }

@@ -61,6 +61,6 @@
 
         <style name="MyDialogTheme" parent = "@android:style/Theme.Holo.Light.Dialog">
         <item name="android:windowCloseOnTouchOutside">false</item>
-        <item name="android:windowBackground">@drawable/white_border_rounded_rectangle_bg_white</item>
+        <item name="android:windowBackground">@drawable/dark_border_rounded_rectangle_bg_white</item>
     </style>
 </resources>
