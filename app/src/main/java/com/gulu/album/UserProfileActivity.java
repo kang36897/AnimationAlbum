@@ -93,41 +93,29 @@ public class UserProfileActivity extends BaseActivity {
             mUserThumbnail = null;
         }
 
+        if(mFollowingBtn != null){
+            mFollowingBtn.setOnClickListener(null);
+            mFollowingBtn = null;
+        }
 
 
-        mFollowingBtn = null;
-        mPhotoAdapter = null;
         if (mPhotoGallery != null) {
             mPhotoGallery.setAdapter(null);
             mPhotoGallery.removeHeaderView(mProfileHeader);
             mPhotoGallery = null;
         }
-        mProfileHeader = null;
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user_profile, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if(mPhotoAdapter != null){
+            mPhotoAdapter.clearSelf();
+            mPhotoAdapter = null;
         }
 
+        mProfileHeader = null;
 
-        return super.onOptionsItemSelected(item);
+
     }
+
+
 
 
     public static class PhotoAdapter extends BaseAdapter {
@@ -197,5 +185,9 @@ public class UserProfileActivity extends BaseActivity {
         }
 
 
+        public void clearSelf(){
+            mContext = null;
+            mData = null;
+        }
     }
 }
