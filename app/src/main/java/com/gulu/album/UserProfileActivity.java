@@ -6,14 +6,11 @@ import android.graphics.Color;
 import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -32,6 +29,9 @@ public class UserProfileActivity extends BaseActivity {
     private final static Integer[] DATA = new Integer[]{
             R.drawable.football_girl, R.drawable.sword_girl, R.drawable.flower_girl,
             R.drawable.feeling_gril, R.drawable.boobs_girl,
+            R.drawable.pink_girl, R.drawable.max_girl, R.drawable.nice_boobs,
+            R.drawable.zhangmin1, R.drawable.zhangmin2, R.drawable.feeling_gril,
+            R.drawable.boobs_girl,
             R.drawable.pink_girl, R.drawable.max_girl, R.drawable.nice_boobs,
             R.drawable.zhangmin1, R.drawable.zhangmin2
     };
@@ -81,6 +81,28 @@ public class UserProfileActivity extends BaseActivity {
             }
         });
 
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUserThumbnail != null) {
+            mUserThumbnail.setImageDrawable(null);
+            mUserThumbnail = null;
+        }
+
+
+
+        mFollowingBtn = null;
+        mPhotoAdapter = null;
+        if (mPhotoGallery != null) {
+            mPhotoGallery.setAdapter(null);
+            mPhotoGallery.removeHeaderView(mProfileHeader);
+            mPhotoGallery = null;
+        }
+        mProfileHeader = null;
 
     }
 
@@ -162,9 +184,9 @@ public class UserProfileActivity extends BaseActivity {
 
             //imageView.setImageDrawable(new ColorDrawable(Color.BLUE));
             ResourceDrawable resourceDrawable;
-            if(imageView.getDrawable() != null && imageView.getDrawable() instanceof  ResourceDrawable){
+            if (imageView.getDrawable() != null && imageView.getDrawable() instanceof ResourceDrawable) {
                 resourceDrawable = (ResourceDrawable) imageView.getDrawable();
-            }else{
+            } else {
                 resourceDrawable = new ResourceDrawable(mContext.getResources());
                 imageView.setImageDrawable(resourceDrawable);
             }
