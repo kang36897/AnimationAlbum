@@ -19,6 +19,7 @@ package com.gulu.album.graphics;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -116,8 +117,40 @@ public abstract class AutoThumbnailDrawable<T> extends Drawable {
             canvas.restore();
         } else {
             // TODO: Draw placeholder...?
+
+            if(mPlaceHolderDrawer == null){
+                canvas.drawColor(mPlaceHolderColor);
+            }else{
+                mPlaceHolderDrawer.onDraw(canvas,mPaint,mBounds);
+            }
+
         }
     }
+
+    private int mPlaceHolderColor = Color.parseColor("#515151");
+
+    public int getPlaceHolderColor() {
+        return mPlaceHolderColor;
+    }
+
+    public void setPlaceHolderColor(int mPlaceHolderColor) {
+        this.mPlaceHolderColor = mPlaceHolderColor;
+    }
+
+    private PlaceHolderDrawer mPlaceHolderDrawer;
+
+    public PlaceHolderDrawer getPlaceHolderDrawer() {
+        return mPlaceHolderDrawer;
+    }
+
+    public void setPlaceHolderDrawer(PlaceHolderDrawer mPlaceHolderDrawer) {
+        this.mPlaceHolderDrawer = mPlaceHolderDrawer;
+    }
+
+    public interface PlaceHolderDrawer{
+        public void onDraw(Canvas canvas, Paint paint, Rect Bounds);
+    }
+
 
     private void updateDrawMatrixLocked() {
         if (mBitmap == null || mBounds.isEmpty()) {

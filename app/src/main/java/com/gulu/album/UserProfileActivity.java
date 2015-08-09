@@ -162,7 +162,7 @@ public class UserProfileActivity extends BaseActivity {
                         mColumSize));
                 imageView.setAdjustViewBounds(false);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setBackground(new ColorDrawable(Color.GREEN));
+
 
 
             } else {
