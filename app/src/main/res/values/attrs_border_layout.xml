@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="bl_position">
+        <flag name="NORTH" value="0X20"/>
+        <flag name="SOUTH" value="0X21"/>
+        <flag name="EAST" value="0x10"/>
+        <flag name="WEST" value="0x11"/>
+        <flag name="CENTER" value="0X00"/>
+
+    </attr>
+
+    <attr name="bl_mode">
+        <flag name="LEFT_RIGHT_COVER" value="0x01"/>
+        <flag name="TOP_BOTTOM_COVER" value="0x20"/>
+    </attr>
+
+    <declare-styleable name="BorderLayout">
+
+        <attr name="bl_mode"/>
+
+    </declare-styleable>
+    <declare-styleable name="BorderLayout_layout">
+        <attr name="bl_position" />
+    </declare-styleable>
+
+</resources>
