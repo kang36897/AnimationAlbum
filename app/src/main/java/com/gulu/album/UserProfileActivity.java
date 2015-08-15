@@ -40,6 +40,7 @@ public class UserProfileActivity extends BaseActivity implements OnMapReadyCallb
             R.drawable.zhangmin1, R.drawable.zhangmin2
     };
 
+
     private HeaderGridView mPhotoGallery;
     private PhotoAdapter mPhotoAdapter;
 
@@ -94,6 +95,13 @@ public class UserProfileActivity extends BaseActivity implements OnMapReadyCallb
         });
 
 
+        ImageView mBackBtn = (ImageView) findViewById(R.id.back_btn);
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
