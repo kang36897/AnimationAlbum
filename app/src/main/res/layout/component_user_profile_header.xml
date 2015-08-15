@@ -192,14 +192,12 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="top"
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="For Map View"
-            android:textColor="#000" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"

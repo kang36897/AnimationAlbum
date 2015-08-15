@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="bl_position">
-        <flag name="NORTH" value="0X20"/>
-        <flag name="SOUTH" value="0X21"/>
+        <flag name="NORTH" value="0x20"/>
+        <flag name="SOUTH" value="0x21"/>
         <flag name="EAST" value="0x10"/>
         <flag name="WEST" value="0x11"/>
-        <flag name="CENTER" value="0X00"/>
+        <flag name="CENTER" value="0x00"/>
 
     </attr>
 

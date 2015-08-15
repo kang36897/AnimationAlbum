@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Shader;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -16,6 +14,12 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.gulu.album.graphics.ResourceDrawable;
 import com.gulu.album.graphics.SBitmapDrawable;
 import com.gulu.album.view.HeaderGridView;
@@ -23,7 +27,7 @@ import com.gulu.album.view.HeaderGridView;
 import java.util.Arrays;
 import java.util.List;
 
-public class UserProfileActivity extends BaseActivity {
+public class UserProfileActivity extends BaseActivity implements OnMapReadyCallback {
 
 
     private final static Integer[] DATA = new Integer[]{
@@ -42,6 +46,9 @@ public class UserProfileActivity extends BaseActivity {
     private View mProfileHeader;
     private ImageView mUserThumbnail;
     private Button mFollowingBtn;
+
+    private MapView mMapView;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +75,11 @@ public class UserProfileActivity extends BaseActivity {
             }
         });
 
+        mMapView = (MapView) mProfileHeader.findViewById(R.id.map_view);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.getMapAsync(this);
+
+
         mPhotoGallery.addHeaderView(mProfileHeader);
 
         mPhotoGallery.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -84,16 +96,40 @@ public class UserProfileActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        mMapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+
         if (mUserThumbnail != null) {
             mUserThumbnail.setImageDrawable(null);
             mUserThumbnail = null;
         }
 
-        if(mFollowingBtn != null){
+        if (mFollowingBtn != null) {
             mFollowingBtn.setOnClickListener(null);
             mFollowingBtn = null;
         }
@@ -105,17 +141,30 @@ public class UserProfileActivity extends BaseActivity {
             mPhotoGallery = null;
         }
 
-        if(mPhotoAdapter != null){
+        if (mPhotoAdapter != null) {
             mPhotoAdapter.clearSelf();
             mPhotoAdapter = null;
         }
 
         mProfileHeader = null;
 
+        mMap = null;
+        mMapView.onDestroy();
+        mMapView = null;
+
+        super.onDestroy();
+
 
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        LatLng initViewPoint = new LatLng(31.175044, 121.410621);
+        mMap.addMarker(new MarkerOptions().position(initViewPoint).title("I am Here!"));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(initViewPoint, 16));
 
+    }
 
 
     public static class PhotoAdapter extends BaseAdapter {
@@ -164,7 +213,6 @@ public class UserProfileActivity extends BaseActivity {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
-
             } else {
                 imageView = (ImageView) convertView;
             }
@@ -185,7 +233,7 @@ public class UserProfileActivity extends BaseActivity {
         }
 
 
-        public void clearSelf(){
+        public void clearSelf() {
             mContext = null;
             mData = null;
         }
