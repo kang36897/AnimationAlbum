@@ -63,4 +63,12 @@
         <item name="android:windowCloseOnTouchOutside">false</item>
         <item name="android:windowBackground">@drawable/dark_border_rounded_rectangle_bg_white</item>
     </style>
+
+    <style name="whiteTextDarkShadow">
+        <item name="android:textColor">#fff</item>
+        <item name="android:shadowRadius">1.2</item>
+        <item name="android:shadowColor">#515151</item>
+        <item name="android:shadowDx">1.2</item>
+        <item name="android:shadowDy">1.2</item>
+    </style>
 </resources>
