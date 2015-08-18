@@ -62,5 +62,6 @@
     <string name="title_activity_user_profile">User Profile</string>
     <string name="title_activity_device_info">Device Info</string>
     <string name="title_activity_hot_profile">HotProfileActivity</string>
+    <string name="title_activity_globel_animation">Globel Animation</string>
 
 </resources>

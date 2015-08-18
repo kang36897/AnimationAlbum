@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/globe_0001"
+        android:maxLevel="5" />
+    <item
+        android:drawable="@drawable/globe_0002"
+        android:maxLevel="10" />
+    <item
+        android:drawable="@drawable/globe_0003"
+        android:maxLevel="15" />
+    <item
+        android:drawable="@drawable/globe_0004"
+        android:maxLevel="20" />
+    <item
+        android:drawable="@drawable/globe_0005"
+        android:maxLevel="25" />
+    <item
+        android:drawable="@drawable/globe_0006"
+        android:maxLevel="30" />
+    <item
+        android:drawable="@drawable/globe_0007"
+        android:maxLevel="35" />
+    <item
+        android:drawable="@drawable/globe_0008"
+        android:maxLevel="40" />
+    <item
+        android:drawable="@drawable/globe_0009"
+        android:maxLevel="45" />
+    <item
+        android:drawable="@drawable/globe_0010"
+        android:maxLevel="50" />
+    <item
+        android:drawable="@drawable/globe_0011"
+        android:maxLevel="55" />
+    <item
+        android:drawable="@drawable/globe_0012"
+        android:maxLevel="60" />
+    <item
+        android:drawable="@drawable/globe_0013"
+        android:maxLevel="65" />
+    <item
+        android:drawable="@drawable/globe_0014"
+        android:maxLevel="70" />
+    <item
+        android:drawable="@drawable/globe_0015"
+        android:maxLevel="75" />
+    <item
+        android:drawable="@drawable/globe_0016"
+        android:maxLevel="80" />
+    <item
+        android:drawable="@drawable/globe_0017"
+        android:maxLevel="85" />
+    <item
+        android:drawable="@drawable/globe_0018"
+        android:maxLevel="90" />
+    <item
+        android:drawable="@drawable/globe_0019"
+        android:maxLevel="95" />
+    <item
+        android:drawable="@drawable/globe_0020"
+        android:maxLevel="100" />
+    <item
+        android:drawable="@drawable/globe_0021"
+        android:maxLevel="105" />
+    <item
+        android:drawable="@drawable/globe_0022"
+        android:maxLevel="110" />
+    <item
+        android:drawable="@drawable/globe_0023"
+        android:maxLevel="115" />
+    <item
+        android:drawable="@drawable/globe_0024"
+        android:maxLevel="120" />
+    <item
+        android:drawable="@drawable/globe_0025"
+        android:maxLevel="125" />
+    <item
+        android:drawable="@drawable/globe_0026"
+        android:maxLevel="130" />
+    <item
+        android:drawable="@drawable/globe_0027"
+        android:maxLevel="135" />
+    <item
+        android:drawable="@drawable/globe_0028"
+        android:maxLevel="140" />
+    <item
+        android:drawable="@drawable/globe_0029"
+        android:maxLevel="145" />
+    <item
+        android:drawable="@drawable/globe_0030"
+        android:maxLevel="150" />
+    <item
+        android:drawable="@drawable/globe_0031"
+        android:maxLevel="155" />
+    <item
+        android:drawable="@drawable/globe_0032"
+        android:maxLevel="160" />
+    <item
+        android:drawable="@drawable/globe_0033"
+        android:maxLevel="165" />
+    <item
+        android:drawable="@drawable/globe_0034"
+        android:maxLevel="170" />
+    <item
+        android:drawable="@drawable/globe_0035"
+        android:maxLevel="175" />
+    <item
+        android:drawable="@drawable/globe_0036"
+        android:maxLevel="180" />
+    <item
+        android:drawable="@drawable/globe_0037"
+        android:maxLevel="185" />
+    <item
+        android:drawable="@drawable/globe_0038"
+        android:maxLevel="190" />
+    <item
+        android:drawable="@drawable/globe_0039"
+        android:maxLevel="195" />
+    <item
+        android:drawable="@drawable/globe_0040"
+        android:maxLevel="200" />
+    <item
+        android:drawable="@drawable/globe_0041"
+        android:maxLevel="205" />
+    <item
+        android:drawable="@drawable/globe_0042"
+        android:maxLevel="210" />
+    <item
+        android:drawable="@drawable/globe_0043"
+        android:maxLevel="215" />
+    <item
+        android:drawable="@drawable/globe_0044"
+        android:maxLevel="220" />
+    <item
+        android:drawable="@drawable/globe_0045"
+        android:maxLevel="225" />
+    <item
+        android:drawable="@drawable/globe_0046"
+        android:maxLevel="230" />
+    <item
+        android:drawable="@drawable/globe_0047"
+        android:maxLevel="235" />
+    <item
+        android:drawable="@drawable/globe_0048"
+        android:maxLevel="240" />
+    <item
+        android:drawable="@drawable/globe_0049"
+        android:maxLevel="245" />
+    <item
+        android:drawable="@drawable/globe_0050"
+        android:maxLevel="250" />
+    <item
+        android:drawable="@drawable/globe_0051"
+        android:maxLevel="255" />
+    <item
+        android:drawable="@drawable/globe_0052"
+        android:maxLevel="260" />
+    <item
+        android:drawable="@drawable/globe_0053"
+        android:maxLevel="265" />
+    <item
+        android:drawable="@drawable/globe_0054"
+        android:maxLevel="270" />
+    <item
+        android:drawable="@drawable/globe_0055"
+        android:maxLevel="275" />
+    <item
+        android:drawable="@drawable/globe_0056"
+        android:maxLevel="280" />
+    <item
+        android:drawable="@drawable/globe_0057"
+        android:maxLevel="285" />
+    <item
+        android:drawable="@drawable/globe_0058"
+        android:maxLevel="290" />
+    <item
+        android:drawable="@drawable/globe_0059"
+        android:maxLevel="295" />
+    <item
+        android:drawable="@drawable/globe_0060"
+        android:maxLevel="300" />
+    <item
+        android:drawable="@drawable/globe_0061"
+        android:maxLevel="305" />
+    <item
+        android:drawable="@drawable/globe_0062"
+        android:maxLevel="310" />
+    <item
+        android:drawable="@drawable/globe_0063"
+        android:maxLevel="315" />
+    <item
+        android:drawable="@drawable/globe_0064"
+        android:maxLevel="320" />
+    <item
+        android:drawable="@drawable/globe_0065"
+        android:maxLevel="325" />
+    <item
+        android:drawable="@drawable/globe_0066"
+        android:maxLevel="330" />
+    <item
+        android:drawable="@drawable/globe_0067"
+        android:maxLevel="335" />
+    <item
+        android:drawable="@drawable/globe_0068"
+        android:maxLevel="340" />
+    <item
+        android:drawable="@drawable/globe_0069"
+        android:maxLevel="345" />
+    <item
+        android:drawable="@drawable/globe_0070"
+        android:maxLevel="350" />
+    <item
+        android:drawable="@drawable/globe_0071"
+        android:maxLevel="355" />
+    <item
+        android:drawable="@drawable/globe_0072"
+        android:maxLevel="360" />
+
+</level-list>

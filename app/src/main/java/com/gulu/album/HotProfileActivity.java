@@ -1,14 +1,9 @@
 package com.gulu.album;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -19,7 +14,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.gulu.album.general.PhotoAdapter;
-import com.gulu.album.graphics.SBitmapDrawable;
 import com.gulu.album.view.HeaderGridView;
 
 import java.util.Arrays;
@@ -41,7 +35,6 @@ public class HotProfileActivity extends BaseActivity implements OnMapReadyCallba
     private PhotoAdapter mPhotoAdapter;
 
     private View mProfileHeader;
-    private ImageView mUserThumbnail;
     private Button mFollowingBtn;
 
     private MapView mMapView;
@@ -119,10 +112,7 @@ public class HotProfileActivity extends BaseActivity implements OnMapReadyCallba
     @Override
     protected void onDestroy() {
 
-        if (mUserThumbnail != null) {
-            mUserThumbnail.setImageDrawable(null);
-            mUserThumbnail = null;
-        }
+
 
         if (mFollowingBtn != null) {
             mFollowingBtn.setOnClickListener(null);
