@@ -1,6 +1,8 @@
 package com.gulu.album;
 
 import android.animation.ValueAnimator;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -8,11 +10,11 @@ import android.widget.ImageView;
 public class GlobelAnimationActivity extends BaseActivity {
 
 
-   private ImageView mGlobelView1;
-   private ValueAnimator m25FramesInOneSecond;
+    private ImageView mGlobelView1;
+    private ValueAnimator m25FramesInOneSecond;
 
     private ImageView mGlobelView2;
-   private ValueAnimator m40FramesInOneSecond;
+    private ValueAnimator m40FramesInOneSecond;
 
     private ImageView mGlobelView3;
     private ValueAnimator m50FramesInOneSecond;
@@ -25,6 +27,11 @@ public class GlobelAnimationActivity extends BaseActivity {
 
     private ImageView mGlobelView6;
     private ValueAnimator m144FramesInOneSecond;
+
+
+    private ImageView mSpecialGlobelView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +52,7 @@ public class GlobelAnimationActivity extends BaseActivity {
                 mGlobelView1.getDrawable().setLevel(level.intValue());
             }
         });
-        m25FramesInOneSecond.start();
+
 
         mGlobelView2 = (ImageView) findViewById(R.id.world_container2);
         /**
@@ -62,7 +69,7 @@ public class GlobelAnimationActivity extends BaseActivity {
                 mGlobelView2.getDrawable().setLevel(level.intValue());
             }
         });
-        m40FramesInOneSecond.start();
+
 
         mGlobelView3 = (ImageView) findViewById(R.id.world_container3);
         /**
@@ -79,7 +86,7 @@ public class GlobelAnimationActivity extends BaseActivity {
                 mGlobelView3.getDrawable().setLevel(level.intValue());
             }
         });
-        m50FramesInOneSecond.start();
+
 
         mGlobelView4 = (ImageView) findViewById(R.id.world_container4);
         /**
@@ -93,11 +100,11 @@ public class GlobelAnimationActivity extends BaseActivity {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 Integer level = (Integer) animation.getAnimatedValue();
+
                 mGlobelView4.getDrawable().setLevel(level.intValue());
+
             }
         });
-        m60FramesInOneSecond.start();
-
 
         mGlobelView5 = (ImageView) findViewById(R.id.world_container5);
         /**
@@ -114,7 +121,6 @@ public class GlobelAnimationActivity extends BaseActivity {
                 mGlobelView5.getDrawable().setLevel(level.intValue());
             }
         });
-        m72FramesInOneSecond.start();
 
 
         mGlobelView6 = (ImageView) findViewById(R.id.world_container6);
@@ -132,82 +138,167 @@ public class GlobelAnimationActivity extends BaseActivity {
                 mGlobelView6.getDrawable().setLevel(level.intValue());
             }
         });
-        m144FramesInOneSecond.start();
+
+
+        mSpecialGlobelView = (ImageView) findViewById(R.id.special_world);
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            m25FramesInOneSecond.start();
+            m40FramesInOneSecond.start();
+            m50FramesInOneSecond.start();
+            m60FramesInOneSecond.start();
+            m72FramesInOneSecond.start();
+            m144FramesInOneSecond.start();
+        } else {
+            if (m25FramesInOneSecond.isPaused()) {
+                m25FramesInOneSecond.resume();
+            } else {
+                m25FramesInOneSecond.start();
+            }
+
+            if (m40FramesInOneSecond.isPaused()) {
+                m40FramesInOneSecond.resume();
+            } else {
+                m40FramesInOneSecond.start();
+            }
+
+            if (m50FramesInOneSecond.isPaused()) {
+                m50FramesInOneSecond.resume();
+            } else {
+                m50FramesInOneSecond.start();
+            }
+
+            if (m60FramesInOneSecond.isPaused()) {
+                m60FramesInOneSecond.resume();
+            } else {
+                m60FramesInOneSecond.start();
+            }
+
+            if (m72FramesInOneSecond.isPaused()) {
+                m72FramesInOneSecond.resume();
+            } else {
+                m72FramesInOneSecond.start();
+            }
+
+            if (m144FramesInOneSecond.isPaused()) {
+                m144FramesInOneSecond.resume();
+            } else {
+                m144FramesInOneSecond.start();
+            }
+
+        }
+
+        AnimationDrawable drawable = (AnimationDrawable) mSpecialGlobelView.getDrawable();
+        drawable.start();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            m25FramesInOneSecond.cancel();
+            m40FramesInOneSecond.cancel();
+            m50FramesInOneSecond.cancel();
+            m60FramesInOneSecond.cancel();
+            m72FramesInOneSecond.cancel();
+            m144FramesInOneSecond.cancel();
+        } else {
+            m25FramesInOneSecond.pause();
+            m40FramesInOneSecond.pause();
+            m50FramesInOneSecond.pause();
+            m60FramesInOneSecond.pause();
+            m72FramesInOneSecond.pause();
+            m144FramesInOneSecond.pause();
+        }
+
+
+        AnimationDrawable drawable = (AnimationDrawable) mSpecialGlobelView.getDrawable();
+        drawable.stop();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-       if(m25FramesInOneSecond != null){
-           m25FramesInOneSecond.cancel();
-           m25FramesInOneSecond.removeAllUpdateListeners();
-           m25FramesInOneSecond = null;
-       }
+        if (m25FramesInOneSecond != null) {
+            m25FramesInOneSecond.cancel();
+            m25FramesInOneSecond.removeAllUpdateListeners();
+            m25FramesInOneSecond = null;
+        }
 
 
-      if(mGlobelView1 != null){
-          mGlobelView1.setImageDrawable(null);
-          mGlobelView1 = null;
-      }
+        if (mGlobelView1 != null) {
+            mGlobelView1.setImageDrawable(null);
+            mGlobelView1 = null;
+        }
 
 
-        if(m40FramesInOneSecond != null){
+        if (m40FramesInOneSecond != null) {
             m40FramesInOneSecond.cancel();
             m40FramesInOneSecond.removeAllUpdateListeners();
             m40FramesInOneSecond = null;
         }
 
 
-        if(mGlobelView2 != null){
+        if (mGlobelView2 != null) {
             mGlobelView2.setImageDrawable(null);
             mGlobelView2 = null;
         }
 
-        if(m50FramesInOneSecond != null){
+        if (m50FramesInOneSecond != null) {
             m50FramesInOneSecond.cancel();
             m50FramesInOneSecond.removeAllUpdateListeners();
             m50FramesInOneSecond = null;
         }
 
 
-        if(mGlobelView3 != null){
+        if (mGlobelView3 != null) {
             mGlobelView3.setImageDrawable(null);
             mGlobelView3 = null;
         }
 
-        if(m60FramesInOneSecond != null){
+        if (m60FramesInOneSecond != null) {
             m60FramesInOneSecond.cancel();
             m60FramesInOneSecond.removeAllUpdateListeners();
             m60FramesInOneSecond = null;
         }
 
 
-        if(mGlobelView4 != null){
+        if (mGlobelView4 != null) {
             mGlobelView4.setImageDrawable(null);
             mGlobelView4 = null;
         }
 
 
-        if(m72FramesInOneSecond != null){
+        if (m72FramesInOneSecond != null) {
             m72FramesInOneSecond.cancel();
             m72FramesInOneSecond.removeAllUpdateListeners();
             m72FramesInOneSecond = null;
         }
 
 
-        if(mGlobelView5 != null){
+        if (mGlobelView5 != null) {
             mGlobelView5.setImageDrawable(null);
             mGlobelView5 = null;
         }
 
-        if(m144FramesInOneSecond != null){
+        if (m144FramesInOneSecond != null) {
             m144FramesInOneSecond.cancel();
             m144FramesInOneSecond.removeAllUpdateListeners();
             m144FramesInOneSecond = null;
         }
 
 
-        if(mGlobelView6 != null){
+        if (mGlobelView6 != null) {
             mGlobelView6.setImageDrawable(null);
             mGlobelView6 = null;
         }
