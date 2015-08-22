@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="130dp"
+
+    android:id="@+id/photo"
+    android:padding="4dp"
+    android:background="@drawable/center_boobs_girl">
+
+ <LinearLayout
+     android:id="@+id/blink_container"
+     android:layout_width="wrap_content"
+     android:layout_alignParentLeft="true"
+     android:layout_alignParentTop="true"
+     android:layout_height="wrap_content"
+     android:padding="4dp"
+     android:orientation="horizontal">
+     <ImageView android:src="@drawable/eye_white"
+         android:layout_width="32dp"
+         android:layout_height="16dp"/>
+     <TextView android:layout_width="wrap_content"
+         android:id="@+id/blink_count"
+         android:text="18"
+         style="@style/whiteTextDarkShadowBlod"
+
+         android:layout_height="wrap_content"/>
+
+ </LinearLayout>
+
+<ImageView
+    android:id="@+id/user_thumbnail"
+    android:layout_alignParentRight="true"
+    android:padding="4dp"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:src="@drawable/football_girl"/>
+
+<TextView android:id="@+id/taken_stamp"
+    android:layout_width="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_toLeftOf="@id/user_thumbnail"
+    android:textSize="14sp"
+    android:textColor="#fff"
+    android:text="5s"
+    android:layout_height="wrap_content"/>
+
+  <TextView android:id="@+id/description"
+      android:padding="4dp"
+      android:textSize="16sp"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
+      style="@style/whiteTextDarkShadowBlod"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="This is a good!"/>
+
+  <LinearLayout
+      android:id="@+id/hot_container"
+      android:layout_width="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:padding="4dp"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          style="@style/whiteTextDarkShadow"
+          android:textSize="14sp"
+          android:text="Breakfirst"/>
+      <ImageView android:id="@+id/hot_tag"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:src="@drawable/hotevent"/>
+
+  </LinearLayout>
+</RelativeLayout>
