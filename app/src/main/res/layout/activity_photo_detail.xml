@@ -1,0 +1,111 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gulu.album.PhotoDetailActivity">
+
+
+  <ListView android:id="@+id/comments_list"
+     android:layout_width="match_parent"
+      android:scrollbars="none"
+     android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+
+        android:id = "@+id/no_comment_hint_block_container"
+        android:focusableInTouchMode="true"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/no_comment_hint_block"
+            android:textColor="#fff"
+            android:background="#1eacdd"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Be the first to commit this photo."
+            android:layout_height="@dimen/common_list_item_height" />
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id = "@+id/comment_container"
+        android:visibility="gone"
+        android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="#1eacdd"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/common_list_item_height">
+            <Button
+                android:id="@+id/send_comment_btn"
+                android:text="Comment"
+                android:paddingRight="2dp"
+                android:layout_alignParentRight="true"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="2dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="#1eacdd"
+                android:background="#fff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText android:id="@+id/photo_comment"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="8dp"
+                android:textColor="#000"
+                android:layout_toLeftOf="@id/send_comment_btn"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@id/send_comment_btn"
+                android:layout_alignBottom="@id/send_comment_btn"
+                android:background="#fff"
+                android:hint="Enter some comments about this photo"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:layout_marginTop="15dip"
+        android:layout_marginLeft="15dip"
+        android:background="@drawable/backarrow_white" />
+
+    <view
+        class="com.gulu.album.view.CanvasView"
+        android:layout_width="72dip"
+        android:layout_gravity="right|top"
+        android:layout_height="72dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:minHeight="30dip"
+        android:minWidth="30dip"
+        android:layout_marginRight="8dp"
+        android:paddingBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip"
+        android:id="@+id/thumbnail" />
+</FrameLayout>

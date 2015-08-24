@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:paddingLeft="8dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:layout_height="64dp">
+    <FrameLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        >
+        <ImageView
+            android:id="@+id/thumbnail_view"
+            android:layout_width="match_parent"
+            android:src="@drawable/football_girl"
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/hot_tag"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/hotevent"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="lalala" />
+        <TextView
+            android:id="@+id/description"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="lalala" />
+    </LinearLayout>
+</LinearLayout>

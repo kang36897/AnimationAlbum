@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent" android:layout_height="@dimen/common_list_item_height">
+
+    <view
+        class="com.gulu.album.view.CanvasView"
+        android:layout_width="64dip"
+        android:layout_height="64dip"
+        android:minHeight="30dip"
+        android:minWidth="30dip"
+        android:paddingBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip"
+        android:id="@+id/item_thumbnail" />
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/item_visitor"
+            android:layout_gravity="center_vertical"
+            android:text="Footbal Girl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/item_comment"
+        android:layout_gravity="center_vertical"
+        android:text="comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/item_pasttime"
+            android:layout_gravity="center_vertical"
+            android:text="5s"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

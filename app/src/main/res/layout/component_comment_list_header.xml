@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:id="@+id/photo_board"
+        android:layout_weight="1"
+        android:background="@drawable/football_girl">
+        <ImageView
+            android:id="@+id/hot_tag_label"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="8dip"
+            android:layout_marginBottom="8dip"
+            android:layout_marginLeft="4dip"
+            android:src="@drawable/hotpoint" />
+        <TextView
+            android:id="@+id/hot_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dip"
+            android:layout_toRightOf="@id/hot_tag_label"
+            android:background="#8fff0000"
+            android:layout_alignParentBottom="true"
+            android:layout_alignBaseline="@id/hot_tag_label"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:text="salalala"
+            android:textStyle="bold"
+            android:textColor="#fff" />
+        <TextView
+            android:id="@+id/photo_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/hot_tag_label"
+            android:layout_alignParentLeft="true"
+            android:minWidth="120dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dip"
+            android:layout_marginLeft="8dip"
+            android:text="So excited!"
+            android:textColor="#fff" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dip"
+        android:layout_gravity="bottom"
+        android:background="#fff"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="---"
+            android:textColor="#1d9dd5"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="2dip"
+            android:paddingRight="2dip"
+            android:minWidth="14dip"
+            android:text="1:42"
+            android:textColor="#1d9dd5" />
+
+        <ImageView
+            android:id="@+id/download_btn"
+            android:layout_width="48dip"
+            android:layout_height="match_parent"
+            android:padding="4dip"
+            android:src="@drawable/download_blue" />
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/darker_gray" />
+        <LinearLayout
+            android:id="@+id/comment_nums"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="48dip"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:src="@drawable/comment_blue" />
+            <TextView
+                android:id="@+id/comment_nums_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="3" />
+        </LinearLayout>
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/darker_gray" />
+        <LinearLayout
+            android:id="@+id/blink_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="48dip"
+                android:layout_height="match_parent"
+                android:padding="4dip"
+                android:src="@drawable/eye_blue" />
+            <TextView
+                android:id="@+id/blink_btn_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="3" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
