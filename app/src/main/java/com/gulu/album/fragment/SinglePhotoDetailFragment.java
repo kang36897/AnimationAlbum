@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
@@ -224,7 +225,6 @@ public class SinglePhotoDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         mCommentAdapter = new CommentAdapter<String>(getActivity(), new ArrayList<String>());
         mCommentsListHeaderView = getActivity().getLayoutInflater().inflate(R.layout.component_comment_list_header, mCommentsListView, false);
 
@@ -282,6 +282,8 @@ public class SinglePhotoDetailFragment extends Fragment {
 
             }
         });
+
+
 
     }
 

@@ -12,9 +12,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:gravity="bottom"
-
         android:id = "@+id/no_comment_hint_block_container"
         android:focusableInTouchMode="true"
+        android:visibility="gone"
         android:layout_height="match_parent"
         android:orientation="vertical">
         <View android:layout_width="match_parent"
@@ -26,6 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:id="@+id/no_comment_hint_block"
+
             android:textColor="#1eacdd"
             android:background="#fff"
             android:textStyle="bold"
@@ -34,7 +35,30 @@
             android:text="Be the first to commit this photo."
             android:layout_height="@dimen/common_list_item_height" />
 
+
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:id = "@+id/loading_container"
+        android:focusableInTouchMode="true"
+        android:background="#fff"
+        android:layout_height="@dimen/common_list_item_height"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="64dp"
+            android:id="@+id/loading_player"
+            android:gravity="center"
+            android:src="@drawable/loading_animation"
+            android:layout_height="32dp" />
+
+    </LinearLayout>
+
 
 
     <ScrollView
