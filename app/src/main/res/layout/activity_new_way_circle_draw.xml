@@ -23,5 +23,20 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:layout_height="90dp"></LinearLayout>
+        android:layout_height="90dp"/>
+
+    <FrameLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="4dp">
+        <ImageView
+            android:src="@drawable/football_girl"
+            android:id="@+id/test5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView android:layout_gravity="bottom|right"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/hotpoint"/>
+    </FrameLayout>
 </LinearLayout>

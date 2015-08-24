@@ -8,8 +8,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.ViewOverlay;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -29,10 +34,11 @@ public class NewWayCircleDrawActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_way_circle_draw);
 
-        ImageView mTest1 = (ImageView) findViewById(R.id.test1);
+        final ImageView mTest1 = (ImageView) findViewById(R.id.test1);
         ImageView mTest2 = (ImageView) findViewById(R.id.test2);
         ImageView mTest3 = (ImageView) findViewById(R.id.test3);
         LinearLayout mTest4 = (LinearLayout) findViewById(R.id.test4);
+        ImageView mTest5 = (ImageView) findViewById(R.id.test5);
 
         DrawOperationWithShader operationWithShader = new DrawOperationWithShader() {
             @Override
@@ -173,6 +179,41 @@ public class NewWayCircleDrawActivity extends BaseActivity {
         drawable.setmDrawOperationWithShader(operationWithShader);
         mTest1.setImageDrawable(drawable);
 
+        mTest1.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mTest1.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
+            Drawable mTagDrawable = getResources().getDrawable(R.drawable.hotevent);
+            ViewOverlay overlay = mTest1.getOverlay();
+
+            int  outWidth =  mTest1.getWidth()- mTest1.getPaddingLeft() - mTest1.getPaddingRight();
+            int outHeight = mTest1.getHeight() - mTest1.getPaddingTop() - mTest1.getPaddingBottom();
+            Rect containerBounds = new Rect(0, 0, outWidth, outHeight);
+
+            int size = Math.min(outWidth, outHeight);
+            Rect innerBounds = new Rect();
+
+            Gravity.apply(Gravity.CENTER, size, size, containerBounds, innerBounds);
+
+            int dw = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,24, getResources().getDisplayMetrics());
+            int dh = dw;
+            Rect bounds = new Rect();
+
+            Gravity.apply(Gravity.RIGHT|Gravity.BOTTOM, dw, dh,innerBounds,0, 8, bounds);
+            mTagDrawable.setBounds(bounds);
+
+            overlay.add(mTagDrawable);
+
+        }
+            }
+        });
+
+
+
+
+
 
         drawable = new SBitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.feeling_gril));
         drawable.setTileModeXY(Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
@@ -204,5 +245,17 @@ public class NewWayCircleDrawActivity extends BaseActivity {
         drawable.setDither(true);
         drawable.setmDrawOperationWithShader(operationWithShader);
         mTest4.setBackground(drawable);
+
+
+        drawable = new SBitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.football_girl));
+        drawable.setTileModeXY(Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        drawable.setGravity(Gravity.CENTER);
+        drawable.setBorderColor(Color.WHITE);
+        drawable.setBorderSize(2);
+        drawable.setAntiAlias(true);
+        drawable.setDither(true);
+        drawable.setmDrawOperationWithShader(operationWithShader);
+        mTest5.setImageDrawable(drawable);
+
     }
 }

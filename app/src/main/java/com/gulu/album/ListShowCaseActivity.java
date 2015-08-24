@@ -61,7 +61,7 @@ public class ListShowCaseActivity extends Activity {
 
 
 			
-			mListView.setAdapter(new ArrayAdapter<String>(this,
+			mListView.setAdapter(new ArrayAdapter<>(this,
 					android.R.layout.simple_list_item_1, mItemData));
 			mListView.setOnItemClickListener(new OnItemClickListener() {
 				
@@ -81,5 +81,17 @@ public class ListShowCaseActivity extends Activity {
 			e.printStackTrace();
 		}
 		
+	}
+
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+
+		if(mListView != null){
+			mListView.setAdapter(null);
+			mListView = null;
+		}
 	}
 }
