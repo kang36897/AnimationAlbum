@@ -15,8 +15,25 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug{
+            debuggable true
+        }
     }
     productFlavors {
+        demo {
+
+        }
+
+        clear{
+
+        }
+    }
+    //sourceSets { main { java.srcDirs = ['src/main/java', 'src/demo/java'] } }
+    sourceSets {
+        demo {
+            manifest.srcFile 'src/demo/AndroidManifest.xml'
+        }
     }
 }
 

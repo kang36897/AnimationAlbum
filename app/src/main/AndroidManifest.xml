@@ -177,22 +177,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gulu.album.ListShowCaseActivity" />
         </activity>
-        <activity
-            android:name=".PhotoDetailActivity"
-            android:label="@string/title_activity_photo_detail"
-            android:parentActivityName=".ListShowCaseActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gulu.album.ListShowCaseActivity" />
-        </activity>
-        <activity
-            android:name=".PhotoDetailBrowserActivity"
-            android:label="@string/title_activity_photo_detail_browser"
-            android:parentActivityName=".ListShowCaseActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gulu.album.ListShowCaseActivity" />
-        </activity>
+
         <activity
             android:name=".NewWayCircleDrawActivity"
             android:label="@string/title_activity_new_way_circle_draw"

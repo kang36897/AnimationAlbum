@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/globe_0001"
         android:maxLevel="5" />
@@ -216,4 +216,4 @@
     <item
         android:drawable="@drawable/globe_0072"
         android:maxLevel="360" />
-</animation-list>
+</level-list>
