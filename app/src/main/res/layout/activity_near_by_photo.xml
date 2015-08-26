@@ -39,14 +39,8 @@
         android:layout_width="match_parent"
         android:spacing="1dp"
         android:unselectedAlpha="1.0"
-        android:layout_height="match_parent" android:gravity="fill"></Gallery>
-        <GridView
-            android:id="@+id/nearby_grid_gallery"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="match_parent"
-            android:numColumns="auto_fit"
-            ></GridView>
+        android:layout_height="match_parent" android:gravity="fill"/>
+
      <RelativeLayout
          android:layout_width="match_parent"
          android:focusable="false"

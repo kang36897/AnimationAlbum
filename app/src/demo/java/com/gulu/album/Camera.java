@@ -31,7 +31,9 @@ import com.gulu.album.view.FocusRectangle;
 import com.gulu.album.view.PreviewFrameLayout;
 import com.gulu.album.view.ShutterButton;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -177,6 +179,14 @@ public class Camera extends BaseActivity implements SurfaceHolder.Callback,  Shu
         }
     }
 
+    private String createName(long dateTaken) {
+        Date date = new Date(dateTaken);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                getString(R.string.image_file_name_format));
+
+        return dateFormat.format(date);
+    }
+
     private class ImageCapture {
 
         private Uri mLastContentUri;
@@ -185,6 +195,14 @@ public class Camera extends BaseActivity implements SurfaceHolder.Callback,  Shu
 
         // Returns the rotation degree in the jpeg header.
         private int storeImage(byte[] data, Location loc) {
+
+            long dateTaken = System.currentTimeMillis();
+            String title = createName(dateTaken);
+            String filename = title + ".jpg";
+            int[] degree = new int[1];
+
+            Util.addImage(title,dateTaken,loc,Util.CAMERA_IMAGE_BUCKET_NAME,filename, null, data,degree);
+
            /* try {
                 long dateTaken = System.currentTimeMillis();
                 String title = createName(dateTaken);
@@ -209,6 +227,8 @@ public class Camera extends BaseActivity implements SurfaceHolder.Callback,  Shu
 
         public void storeImage(final byte[] data,
                                android.hardware.Camera camera, Location loc) {
+
+            storeImage(data, loc);
           /*  if (!mIsImageCaptureIntent) {
                 int degree = storeImage(data, loc);
                 sendBroadcast(new Intent(
@@ -741,13 +761,27 @@ public class Camera extends BaseActivity implements SurfaceHolder.Callback,  Shu
     }
 
 
-
+    /**
+     *  try to get the biggest size
+     * @param parameters
+     * @return
+     */
     private android.hardware.Camera.Size getBestPictureSize(android.hardware.Camera.Parameters parameters){
+        android.hardware.Camera.Size  best = parameters.getSupportedPictureSizes().get(0);
+        int area = best.width * best.height;
+
 
         for(android.hardware.Camera.Size item : parameters.getSupportedPictureSizes()){
 
+            if(item.width * item.height > area)
+            {
+                best = item;
+                area = item.width * item.height;
+            }
 
         }
+
+        return best;
     }
 
 
@@ -902,6 +936,38 @@ public class Camera extends BaseActivity implements SurfaceHolder.Callback,  Shu
             mFocusMode = mParameters.getFocusMode();
         }
     }
+
+    private void switchCameraId(int cameraId) {
+        if (mPausing || !isCameraIdle()) return;
+        mCameraId = cameraId;
+      /*  CameraSettings.writePreferredCameraId(mPreferences, cameraId);*/
+
+        stopPreview();
+        closeCamera();
+
+        // Remove the messages in the event queue.
+        mHandler.removeMessages(RESTART_PREVIEW);
+
+        // Reset variables
+        mJpegPictureCallbackTime = 0;
+        mZoomValue = 0;
+
+        // Reload the preferences.
+    /*    mPreferences.setLocalId(this, mCameraId);*/
+ /*       CameraSettings.upgradeLocalPreferences(mPreferences.getLocal());*/
+
+        // Restart the preview.
+      /*  resetExposureCompensation();*/
+        if (!restartPreview()) return;
+
+       /* initializeZoom();*/
+
+        // Reload the UI.
+        if (mFirstTimeInitialized) {
+          /*  initializeHeadUpDisplay();*/
+        }
+    }
+
 
     private static boolean isSupported(String value, List<String> supported) {
         return supported == null ? false : supported.indexOf(value) >= 0;

@@ -11,6 +11,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.location.Location;
+import android.media.ExifInterface;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
@@ -21,6 +24,11 @@ import com.gulu.album.R;
 import com.gulu.album.item.IImage;
 
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Collection of utility functions used in this package.
@@ -33,6 +41,9 @@ public class Util {
     public static final int DIRECTION_DOWN = 3;
 
     public static final String REVIEW_ACTION = "com.cooliris.media.action.REVIEW";
+    public static final String CAMERA_IMAGE_BUCKET_NAME =
+            Environment.getExternalStorageDirectory().toString()
+                    + "/DCIM/Camera";
 
     private Util() {
     }
@@ -314,5 +325,68 @@ public class Util {
             result = (info.orientation - degrees + 360) % 360;
         }
         camera.setDisplayOrientation(result);
+    }
+
+    public static String addImage( String title, long dateTaken,
+                               Location location, String directory, String filename,
+                               Bitmap source, byte[] jpegData, int[] degree) {
+        // We should store image data earlier than insert it to ContentProvider,
+        // otherwise we may not be able to generate thumbnail in time.
+        OutputStream outputStream = null;
+        String filePath = directory + "/" + filename;
+        try {
+            File dir = new File(directory);
+            if (!dir.exists()) dir.mkdirs();
+            File file = new File(directory, filename);
+            outputStream = new FileOutputStream(file);
+            if (source != null) {
+                source.compress(Bitmap.CompressFormat.JPEG, 75, outputStream);
+                degree[0] = 0;
+            } else {
+                outputStream.write(jpegData);
+                degree[0] = getExifOrientation(filePath);
+            }
+        } catch (FileNotFoundException ex) {
+            Log.w(TAG, ex);
+            return null;
+        } catch (IOException ex) {
+            Log.w(TAG, ex);
+            return null;
+        } finally {
+            Util.closeSilently(outputStream);
+            return filePath;
+        }
+
+
+    }
+
+    public static int getExifOrientation(String filepath) {
+        int degree = 0;
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(filepath);
+        } catch (IOException ex) {
+            Log.e(TAG, "cannot read exif", ex);
+        }
+        if (exif != null) {
+            int orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, -1);
+            if (orientation != -1) {
+                // We only recognize a subset of orientation tag values.
+                switch(orientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        degree = 90;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        degree = 180;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        degree = 270;
+                        break;
+                }
+
+            }
+        }
+        return degree;
     }
 }
