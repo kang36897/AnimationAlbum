@@ -65,4 +65,6 @@
     <string name="title_activity_globel_animation">Globel Animation</string>
     <string name="title_activity_photo_detail">Photo Detail</string>
     <string name="title_activity_photo_detail_browser">Photo Browser</string>
+    <string name="title_activity_google_camera">Extract Camera from Google Code</string>
+    <string name="details_ok">Ok</string>
 </resources>
