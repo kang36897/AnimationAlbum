@@ -34,6 +34,7 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
         mPhotoBrowser = (ViewPager) findViewById(R.id.photo_browser);
         mPhotoAdapter = new PhotoAdapter(getFragmentManager(), Arrays.asList(mData));
         mPhotoBrowser.setAdapter(mPhotoAdapter);
+
     }
 
 

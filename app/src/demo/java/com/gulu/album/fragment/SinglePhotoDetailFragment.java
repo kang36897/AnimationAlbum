@@ -5,25 +5,32 @@ import android.app.Fragment;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.gulu.album.R;
@@ -33,6 +40,9 @@ import com.gulu.album.view.CanvasView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.gulu.album.R.id.btn_opts;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -41,7 +51,7 @@ import java.util.List;
  * Use the {@link SinglePhotoDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SinglePhotoDetailFragment extends Fragment {
+public class SinglePhotoDetailFragment extends Fragment implements ViewPager.OnPageChangeListener{
 
     private static final String TARGET_PHOTO = "target_photo";
 
@@ -80,6 +90,8 @@ public class SinglePhotoDetailFragment extends Fragment {
     private TextView mBlinkBtn;
 
     private OnFragmentInteractionListener mListener;
+    private TextView mOptionsBtn;
+    private PopupWindow mPopupWindow;
 
     /**
      * Use this factory method to create a new instance of
@@ -259,6 +271,17 @@ public class SinglePhotoDetailFragment extends Fragment {
             }
         });
 
+
+        mOptionsBtn = (TextView) mCommentsListHeaderView.findViewById(R.id.btn_opts);
+        mOptionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showOptionsPopWindow();
+            }
+        });
+
+
+
         commentHeight = (int) (getResources().getDimension(R.dimen.common_list_item_height) + 0.5f);
         final View mRoot = getView();
         mRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -287,20 +310,93 @@ public class SinglePhotoDetailFragment extends Fragment {
 
     }
 
+
+
+
+    public void showOptionsPopWindow()
+    {
+
+        mPopupWindow = new PopupWindow(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#efffffff")));
+        mPopupWindow.setFocusable(true);
+
+        View mContentView = LayoutInflater.from(getActivity()).inflate(R.layout.component_report_options, mCommentContainer, false);
+        ListView mOptionsListView = (ListView) mContentView.findViewById(R.id.options_list);
+        mOptionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+
+
+
+
+        TextView mCancelBtn = (TextView) mContentView.findViewById(R.id.btn_cancel);
+        mCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
+
+        mPopupWindow.setContentView(mContentView);
+
+        mPopupWindow.showAtLocation(getView(),Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL, 0, 0);
+
+    }
+
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
 
         mInputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+
+
+
+    }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
         mInputMethodManager = null;
+
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+         if(ViewPager.SCROLL_STATE_DRAGGING == state)
+         {
+             if(mPopupWindow != null && mPopupWindow.isShowing())
+         {
+             mPopupWindow.dismiss();
+             mPopupWindow = null;
+         }
+
+         }
     }
 
     /**

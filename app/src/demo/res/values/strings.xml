@@ -54,4 +54,17 @@
         <item>@string/pref_camera_picturesize_entry_640x480</item>
         <item>@string/pref_camera_picturesize_entry_320x240</item>
     </string-array>
+
+    <string name ="photo_detail_report_options_title">I want to report this photo because...</string>
+    <string-array name="report_reasons">
+        <item>@string/report_reason_offensive</item>
+        <item>@string/report_reason_inappropriate</item>
+        <item>@string/report_reason_not_be_there</item>
+    </string-array>
+
+    <string name ="report_reason_offensive">It\'s offensive</string>
+    <string name="report_reason_inappropriate">It\'s inappropriate</string>
+    <string name ="report_reason_not_be_there">I don\'t want to be in it</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
 </resources>

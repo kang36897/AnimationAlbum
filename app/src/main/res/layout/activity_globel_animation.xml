@@ -14,35 +14,35 @@
         android:id="@+id/world_container1"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/globel" />
+        android:src="@drawable/level_globel" />
     <ImageView
 
         android:id="@+id/world_container2"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/globel" />
+        android:src="@drawable/level_globel" />
     <ImageView
         android:id="@+id/world_container3"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/globel" />
+        android:src="@drawable/level_globel" />
 
     <ImageView
         android:id="@+id/world_container4"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/globel" />
+        android:src="@drawable/level_globel" />
     <ImageView
 
         android:id="@+id/world_container5"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/globel" />
+        android:src="@drawable/level_globel" />
     <ImageView
         android:id="@+id/world_container6"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/globel" />
+        android:src="@drawable/level_globel" />
   </LinearLayout>
   <ImageView
       android:id="@+id/special_world"

@@ -315,6 +315,7 @@ public class Camera extends BaseActivity implements SurfaceHolder.Callback,  Shu
 
             mCameraDevice.setParameters(mParameters);
 
+
             mCameraDevice.takePicture(mShutterCallback, null,
                     null, new JpegPictureCallback(loc));
             mPreviewing = false;
