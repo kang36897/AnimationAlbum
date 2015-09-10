@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,8 @@ public class PhotoDetailActivity extends BaseActivity {
 
 
     private InputMethodManager mInputMethodManager;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,6 +199,10 @@ public class PhotoDetailActivity extends BaseActivity {
 
             }
         });
+
+
+
+
     }
 
 

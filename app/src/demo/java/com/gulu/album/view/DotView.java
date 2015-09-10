@@ -12,7 +12,7 @@ import android.view.View;
  */
 public class DotView extends View {
     private final static int NORMAL_COLOR = Color.parseColor("#efffffff");
-    private final static int SELECTED_COLOR = Color.parseColor("#fff");
+    private final static int SELECTED_COLOR = Color.parseColor("#ff00ff");
     private boolean mIsChecked = false;
     private Paint mPaint;
 
@@ -32,7 +32,7 @@ public class DotView extends View {
         initialization();
     }
 
-    public void setChecked(boolean checked)
+    public void setCheckedState(boolean checked)
     {
         if(mIsChecked == checked)
         {
@@ -48,14 +48,14 @@ public class DotView extends View {
     private void initialization()
     {
 
-
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
+
 
         int innerWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
         int innerHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();

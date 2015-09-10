@@ -5,9 +5,12 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.gulu.album.fragment.SinglePhotoDetailFragment;
 import com.gulu.album.item.EPhoto;
+import com.gulu.album.view.DotView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +29,25 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
             new EPhoto(R.drawable.max_girl),
             new EPhoto(R.drawable.flower_girl)};
 
+    private int mLastPosition;
+    private LinearLayout mPageIndicator;
+
+
+    private ViewPager.SimpleOnPageChangeListener simpleOnPageChangeListener = new ViewPager.SimpleOnPageChangeListener(){
+        @Override
+        public void onPageSelected(int position) {
+            super.onPageSelected(position);
+            DotView item = (DotView) mPageIndicator.getChildAt(mLastPosition);
+           item.setCheckedState(false);
+
+            mLastPosition = position;
+
+            item = (DotView) mPageIndicator.getChildAt(mLastPosition);
+           item.setCheckedState(true);
+            item.setSelected(true);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +56,15 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
         mPhotoBrowser = (ViewPager) findViewById(R.id.photo_browser);
         mPhotoAdapter = new PhotoAdapter(getFragmentManager(), Arrays.asList(mData));
         mPhotoBrowser.setAdapter(mPhotoAdapter);
+
+        mPhotoBrowser.addOnPageChangeListener(simpleOnPageChangeListener);
+        mPageIndicator = (LinearLayout) findViewById(R.id.pager_indicators);
+        for(int i = 0; i < mData.length; i++ ){
+            DotView item = new DotView(this);
+            mPageIndicator.addView(item, new LinearLayout.LayoutParams((int)getResources().getDisplayMetrics().density * 32, LinearLayout.LayoutParams.MATCH_PARENT));
+        }
+
+        mLastPosition = mPhotoBrowser.getCurrentItem();
 
     }
 
