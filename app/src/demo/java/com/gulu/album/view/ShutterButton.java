@@ -5,12 +5,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
-import com.gulu.album.R;
 
 /**
  * A button designed to be used for the on-screen shutter button.
@@ -37,7 +33,6 @@ public class ShutterButton extends ImageView {
     private OnShutterButtonListener mListener;
     private boolean mOldPressed;
 
-    final static int ID_SENSOR_CHANGED = 0X11;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private Sensor mMagneticSensor;
