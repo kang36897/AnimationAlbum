@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:indicator="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#515151"
+    android:gravity="bottom|center_horizontal"
+    android:layout_height="match_parent">
+
+    <com.gulu.album.view.PagerIndicator
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="40dp"
+        android:layout_height="wrap_content"
+        indicator:pi_pagerCount = "4"
+        indicator:pi_space = "4dp"
+        indicator:pi_radius= "6dp"
+        indicator:pi_currentPage = "1"
+        android:padding="4dp"/>
+</LinearLayout>

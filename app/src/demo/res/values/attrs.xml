@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="pi_pagerCount" format="integer"/>
+    <attr name="pi_currentPage" format="integer"/>
+    <attr name="pi_space" format="dimension"/>
+    <attr name="pi_radius" format="dimension"/>
+
+    <declare-styleable name="pagerIndicator">
+        <attr name="pi_pagerCount" />
+        <attr name="pi_currentPage"/>
+        <attr name="pi_space"/>
+        <attr name="pi_radius"/>
+    </declare-styleable>
+</resources>
