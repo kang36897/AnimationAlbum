@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.gulu.album.fragment.SinglePhotoDetailFragment;
 import com.gulu.album.item.EPhoto;
 import com.gulu.album.view.DotView;
+import com.gulu.album.view.PagerIndicator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,7 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
 
     private int mLastPosition;
     private LinearLayout mPageIndicator;
+    private PagerIndicator mIndicator;
 
 
     private ViewPager.SimpleOnPageChangeListener simpleOnPageChangeListener = new ViewPager.SimpleOnPageChangeListener(){
@@ -43,8 +45,15 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
             mLastPosition = position;
 
             item = (DotView) mPageIndicator.getChildAt(mLastPosition);
-           item.setCheckedState(true);
+            item.setCheckedState(true);
             item.setSelected(true);
+
+            mIndicator.setCurrentPageByAnimation(position);
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
     };
 
@@ -66,6 +75,8 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
 
         mLastPosition = mPhotoBrowser.getCurrentItem();
 
+        mIndicator = (PagerIndicator) findViewById(R.id.pager_indicators2);
+        mIndicator.setCurrentPage(mLastPosition);
     }
 
 

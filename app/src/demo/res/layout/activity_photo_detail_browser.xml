@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:indicator = "http://schemas.android.com/apk/res-auto"
      android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,8 +11,8 @@
         android:id="@+id/photo_browser" />
 
     <LinearLayout
+        android:visibility="invisible"
         android:id="@+id/pager_indicators"
-
         android:layout_width="wrap_content"
         android:padding="4dp"
         android:layout_height="32dp"
@@ -21,4 +22,16 @@
         android:layout_gravity="center_horizontal|bottom">
 
     </LinearLayout>
+    <com.gulu.album.view.PagerIndicator
+        android:id="@+id/pager_indicators2"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="#515151"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_height="wrap_content"
+        indicator:pi_pagerCount = "4"
+        indicator:pi_space = "4dp"
+        indicator:pi_radius= "6dp"
+
+        android:padding="4dp"/>
 </FrameLayout>
