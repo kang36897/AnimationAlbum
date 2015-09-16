@@ -7,9 +7,14 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
+import android.graphics.Xfermode;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.gulu.album.R;
@@ -19,11 +24,16 @@ import com.gulu.album.R;
  */
 public class PagerIndicator extends View {
 
+    private final static String TAG = "PagerIndicator";
     private final static int NORMAL_COLOR = Color.parseColor("#efffffff");
     private final static int SELECTED_COLOR = Color.parseColor("#ff00ff00");
+    private final static int ACTIVED_COLOR = Color.parseColor("#ffffff00");
 
     private RadialGradient mNomralShader;
     private RadialGradient mSelectedShader;
+    private RadialGradient mActivedShader;
+
+    private RadialGradient mCurrentShader;
     private Paint mPaint;
     private int mPagerCount;
     private int mCurrentPage;
@@ -34,6 +44,7 @@ public class PagerIndicator extends View {
     private int mPreviousValue;
     private int mCurrentValue;
     private int mOffset;
+    private int mPositionOffsetPixelsLimit;
 
     public PagerIndicator(Context context) {
         super(context);
@@ -133,7 +144,8 @@ public class PagerIndicator extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mNomralShader = new RadialGradient(mRadius, mRadius, mRadius,Color.TRANSPARENT, NORMAL_COLOR,  Shader.TileMode.CLAMP);
-        mSelectedShader = new RadialGradient(mRadius, mRadius, mRadius, new int[]{SELECTED_COLOR, Color.TRANSPARENT, SELECTED_COLOR}, new float[]{0.6f, 0.8f,1.0f}, Shader.TileMode.CLAMP);
+        mCurrentShader =  mSelectedShader = new RadialGradient(mRadius, mRadius, mRadius, new int[]{SELECTED_COLOR, Color.TRANSPARENT, SELECTED_COLOR}, new float[]{0.6f, 0.8f,1.0f}, Shader.TileMode.CLAMP);
+        mActivedShader = new RadialGradient(mRadius, mRadius,mRadius, new int[]{ SELECTED_COLOR, Color.TRANSPARENT,ACTIVED_COLOR}, new float[]{0.6f,0.7f, 1.0f}, Shader.TileMode.CLAMP);
         mOffset = mRadius * 2 + mSpacing;
         mCurrentValue = mPreviousValue = mRadius + mOffset * mCurrentPage;
 
@@ -157,7 +169,7 @@ public class PagerIndicator extends View {
 
         //mPaint.setColor(NORMAL_COLOR);
         canvas.save();
-        canvas.translate(getPaddingLeft(),getPaddingTop());
+        canvas.translate(getPaddingLeft(), getPaddingTop());
 
         mPaint.setShader(mNomralShader);
         for (int i = 0; i < mPagerCount; i++) {
@@ -168,12 +180,89 @@ public class PagerIndicator extends View {
         }
 
         // draw the selected one
-         mPaint.setShader(mSelectedShader);
+        mPaint.setShader(mCurrentShader);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
+
         canvas.save();
         canvas.translate(mCurrentValue - mRadius, 0);
         canvas.drawCircle(mRadius, mRadius, mRadius, mPaint);
         canvas.restore();
 
         canvas.restore();
+    }
+
+
+    private ViewPager.OnPageChangeListener mSimplePageChangeListener = new ViewPager.SimpleOnPageChangeListener(){
+
+        private int mSelectedPosition = -1;
+        private int mGoalPosition = -1;
+        @Override
+        public void onPageSelected(int position) {
+            Log.d(TAG, "selected position = " + position);
+            //setCurrentPage(position);
+
+            mSelectedPosition = position;
+
+
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            Log.d(TAG, "mGoalPosition = "+ mGoalPosition+", position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
+
+
+            mOffset = Math.abs(mOffset);
+            if (position < mCurrentPage) {
+                mOffset = mOffset * -1;
+                mGoalPosition = mCurrentPage - 1;
+           }else
+            {
+                mGoalPosition = mCurrentPage + 1;
+            }
+
+            if(mSelectedPosition == mGoalPosition && mGoalPosition == position)
+            {
+                return;
+            }
+
+
+
+            mCurrentValue = mPreviousValue + (int)(mOffset * ((float)positionOffsetPixels / mPositionOffsetPixelsLimit));
+            invalidate();
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            Log.d(TAG, (state == ViewPager.SCROLL_STATE_DRAGGING ? "state is dragging"
+                    : (state == ViewPager.SCROLL_STATE_IDLE ? "state is idle" : "state is settings")));
+            if(state == ViewPager.SCROLL_STATE_DRAGGING)
+            {
+                mCurrentShader = mActivedShader;
+                invalidate();
+            }else if(state == ViewPager.SCROLL_STATE_IDLE)
+            {
+                mCurrentShader = mSelectedShader;
+                if(mSelectedPosition != -1)
+                {
+                    setCurrentPage(mSelectedPosition);
+                }else
+                {
+                    invalidate();
+                }
+
+            }else
+            {
+                mCurrentShader = mSelectedShader;
+
+            }
+        }
+    };
+
+    public ViewPager.OnPageChangeListener getOnPageChangeListener(int positionOffsetPixelsLimit)
+    {
+        mPositionOffsetPixelsLimit = positionOffsetPixelsLimit;
+        return mSimplePageChangeListener;
     }
 }

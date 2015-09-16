@@ -5,7 +5,8 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import com.gulu.album.fragment.SinglePhotoDetailFragment;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by Administrator on 2015/7/31.
  */
 public class PhotoDetailBrowserActivity extends BaseActivity {
-
+    private final static String TAG = "PhotoDetailBrowser";
 
     private ViewPager mPhotoBrowser;
     private PhotoAdapter mPhotoAdapter;
@@ -35,12 +36,12 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
     private PagerIndicator mIndicator;
 
 
-    private ViewPager.SimpleOnPageChangeListener simpleOnPageChangeListener = new ViewPager.SimpleOnPageChangeListener(){
+    private ViewPager.SimpleOnPageChangeListener simpleOnPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
             super.onPageSelected(position);
             DotView item = (DotView) mPageIndicator.getChildAt(mLastPosition);
-           item.setCheckedState(false);
+            item.setCheckedState(false);
 
             mLastPosition = position;
 
@@ -48,7 +49,7 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
             item.setCheckedState(true);
             item.setSelected(true);
 
-            mIndicator.setCurrentPageByAnimation(position);
+
         }
 
         @Override
@@ -66,17 +67,31 @@ public class PhotoDetailBrowserActivity extends BaseActivity {
         mPhotoAdapter = new PhotoAdapter(getFragmentManager(), Arrays.asList(mData));
         mPhotoBrowser.setAdapter(mPhotoAdapter);
 
+
         mPhotoBrowser.addOnPageChangeListener(simpleOnPageChangeListener);
+
         mPageIndicator = (LinearLayout) findViewById(R.id.pager_indicators);
-        for(int i = 0; i < mData.length; i++ ){
+        for (int i = 0; i < mData.length; i++) {
             DotView item = new DotView(this);
-            mPageIndicator.addView(item, new LinearLayout.LayoutParams((int)getResources().getDisplayMetrics().density * 32, LinearLayout.LayoutParams.MATCH_PARENT));
+            mPageIndicator.addView(item, new LinearLayout.LayoutParams((int) getResources().getDisplayMetrics().density * 32, LinearLayout.LayoutParams.MATCH_PARENT));
         }
 
         mLastPosition = mPhotoBrowser.getCurrentItem();
 
         mIndicator = (PagerIndicator) findViewById(R.id.pager_indicators2);
+
         mIndicator.setCurrentPage(mLastPosition);
+
+        mPhotoBrowser.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mPhotoBrowser.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int offsetLimit =
+                        mPhotoBrowser.getWidth() - mPhotoBrowser.getPaddingLeft() - mPhotoBrowser.getPaddingRight() + mPhotoBrowser.getPageMargin();
+                Log.d(TAG,"offset limit =" + offsetLimit);
+                mPhotoBrowser.addOnPageChangeListener(mIndicator.getOnPageChangeListener(offsetLimit));
+            }
+        });
     }
 
 
