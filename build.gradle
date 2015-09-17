@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url "https://github.com/jwkelso/android-maven/raw/master/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.2.3'
