@@ -25,7 +25,7 @@
     <com.gulu.album.view.PagerIndicator
         android:id="@+id/pager_indicators2"
         android:layout_gravity="center_horizontal|bottom"
-        android:background="#515151"
+
         android:layout_width="wrap_content"
         android:layout_marginBottom="40dp"
         android:layout_height="wrap_content"

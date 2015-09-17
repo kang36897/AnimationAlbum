@@ -11,7 +11,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
-import android.graphics.Xfermode;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -71,6 +70,7 @@ public class PagerIndicator extends View {
         }
 
         mCurrentPage = position;
+        mOffset = Math.abs(mOffset);
         mCurrentValue = mRadius + mCurrentPage * mOffset;
         mPreviousValue = mCurrentValue;
         invalidate();
@@ -143,9 +143,9 @@ public class PagerIndicator extends View {
     private void initialization() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mNomralShader = new RadialGradient(mRadius, mRadius, mRadius,Color.TRANSPARENT, NORMAL_COLOR,  Shader.TileMode.CLAMP);
-        mCurrentShader =  mSelectedShader = new RadialGradient(mRadius, mRadius, mRadius, new int[]{SELECTED_COLOR, Color.TRANSPARENT, SELECTED_COLOR}, new float[]{0.6f, 0.8f,1.0f}, Shader.TileMode.CLAMP);
-        mActivedShader = new RadialGradient(mRadius, mRadius,mRadius, new int[]{ SELECTED_COLOR, Color.TRANSPARENT,ACTIVED_COLOR}, new float[]{0.6f,0.7f, 1.0f}, Shader.TileMode.CLAMP);
+        mNomralShader = new RadialGradient(mRadius, mRadius, mRadius, Color.TRANSPARENT, NORMAL_COLOR, Shader.TileMode.CLAMP);
+        mCurrentShader = mSelectedShader = new RadialGradient(mRadius, mRadius, mRadius, new int[]{SELECTED_COLOR, Color.TRANSPARENT, SELECTED_COLOR}, new float[]{0.6f, 0.8f, 1.0f}, Shader.TileMode.CLAMP);
+        mActivedShader = new RadialGradient(mRadius, mRadius, mRadius, new int[]{SELECTED_COLOR, Color.TRANSPARENT, ACTIVED_COLOR}, new float[]{0.6f, 0.8f, 1.0f}, Shader.TileMode.CLAMP);
         mOffset = mRadius * 2 + mSpacing;
         mCurrentValue = mPreviousValue = mRadius + mOffset * mCurrentPage;
 
@@ -164,10 +164,7 @@ public class PagerIndicator extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-//        int innerWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
-//        int innerHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
-
-        //mPaint.setColor(NORMAL_COLOR);
+        mPaint.setAntiAlias(true);
         canvas.save();
         canvas.translate(getPaddingLeft(), getPaddingTop());
 
@@ -180,6 +177,7 @@ public class PagerIndicator extends View {
         }
 
         // draw the selected one
+        mPaint.setShader(null);
         mPaint.setShader(mCurrentShader);
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
 
@@ -192,76 +190,73 @@ public class PagerIndicator extends View {
     }
 
 
-    private ViewPager.OnPageChangeListener mSimplePageChangeListener = new ViewPager.SimpleOnPageChangeListener(){
+    private ViewPager.OnPageChangeListener mSimplePageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
 
         private int mSelectedPosition = -1;
-        private int mGoalPosition = -1;
+
         @Override
         public void onPageSelected(int position) {
             Log.d(TAG, "selected position = " + position);
-            //setCurrentPage(position);
-
             mSelectedPosition = position;
-
-
         }
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            Log.d(TAG, "mGoalPosition = "+ mGoalPosition+", position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
+            Log.d(TAG, "mSelectedPosition = " + mSelectedPosition + ", position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
 
-
-            mOffset = Math.abs(mOffset);
-            if (position < mCurrentPage) {
-                mOffset = mOffset * -1;
-                mGoalPosition = mCurrentPage - 1;
-           }else
-            {
-                mGoalPosition = mCurrentPage + 1;
-            }
-
-            if(mSelectedPosition == mGoalPosition && mGoalPosition == position)
-            {
+            // when scrolling is stop
+            if (mSelectedPosition == position && positionOffsetPixels == 0) {
                 return;
             }
 
+            /**
+             * when scroll to right, positionOffsetPixels is increased.
+             */
+            if (position == mCurrentPage) {
 
+                mOffset = Math.abs(mOffset);
+                mCurrentValue = mPreviousValue + (int) (mOffset * ((float) positionOffsetPixels / mPositionOffsetPixelsLimit));
 
-            mCurrentValue = mPreviousValue + (int)(mOffset * ((float)positionOffsetPixels / mPositionOffsetPixelsLimit));
+                /**
+                 * when scroll to left, positionOffsetPixels is decreased.
+                 */
+            } else if (position != mCurrentPage) {
+
+                mOffset = -1 * Math.abs(mOffset);
+                mCurrentValue = mPreviousValue + (int) (mOffset * ((float) (mPositionOffsetPixelsLimit - positionOffsetPixels) / mPositionOffsetPixelsLimit));
+
+            }
+
             invalidate();
-
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
             Log.d(TAG, (state == ViewPager.SCROLL_STATE_DRAGGING ? "state is dragging"
                     : (state == ViewPager.SCROLL_STATE_IDLE ? "state is idle" : "state is settings")));
-            if(state == ViewPager.SCROLL_STATE_DRAGGING)
-            {
+            if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+
                 mCurrentShader = mActivedShader;
                 invalidate();
-            }else if(state == ViewPager.SCROLL_STATE_IDLE)
-            {
+
+            } else if (state == ViewPager.SCROLL_STATE_IDLE) {
+
                 mCurrentShader = mSelectedShader;
-                if(mSelectedPosition != -1)
-                {
+                if (mSelectedPosition != -1) {
                     setCurrentPage(mSelectedPosition);
-                }else
-                {
+                    mSelectedPosition = -1;
+                } else {
                     invalidate();
                 }
 
-            }else
-            {
+            } else {
                 mCurrentShader = mSelectedShader;
-
             }
         }
     };
 
-    public ViewPager.OnPageChangeListener getOnPageChangeListener(int positionOffsetPixelsLimit)
-    {
+    public ViewPager.OnPageChangeListener getOnPageChangeListener(int positionOffsetPixelsLimit) {
         mPositionOffsetPixelsLimit = positionOffsetPixelsLimit;
         return mSimplePageChangeListener;
     }
