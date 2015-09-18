@@ -15,7 +15,7 @@ import android.widget.ImageView;
  */
 public class ScaleImageView extends ImageView{
 
-    private Context mContext;
+
     private float MAX_SCALE = 2f;
 
     private Matrix mMatrix;
@@ -42,26 +42,26 @@ public class ScaleImageView extends ImageView{
 
     public ScaleImageView(Context context, AttributeSet attr) {
         super(context, attr);
-        this.mContext = context;
+
         initialize();
     }
 
     public ScaleImageView(Context context) {
         super(context);
-        this.mContext = context;
+
         initialize();
     }
 
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
-        this.initialize();
+        initialize();
     }
 
     @Override
     public void setImageResource(int resId) {
         super.setImageResource(resId);
-        this.initialize();
+        initialize();
     }
 
     private void initialize() {
@@ -73,7 +73,7 @@ public class ScaleImageView extends ImageView{
             mIntrinsicHeight = d.getIntrinsicHeight();
 
         }
-        mDetector = new GestureDetector(mContext, new GestureDetector.SimpleOnGestureListener() {
+        mDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
                 maxZoomTo((int) e.getX(), (int) e.getY());
