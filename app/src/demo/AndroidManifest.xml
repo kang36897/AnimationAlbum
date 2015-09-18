@@ -30,7 +30,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gulu.album.ListShowCaseActivity" />
         </activity>
-
+        <activity android:name=".MatrixImageActivity"
+            android:label="@string/title_matrix_image_activity"
+            android:parentActivityName=".ListShowCaseActivity"></activity>
     </application>
 
 </manifest>

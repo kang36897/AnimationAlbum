@@ -67,4 +67,5 @@
     <string name="title_activity_photo_detail_browser">Photo Browser</string>
     <string name="title_activity_google_camera">Extract Camera from Google Code</string>
     <string name="details_ok">Ok</string>
+    <string name="title_matrix_image_activity">Matrix Image</string>
 </resources>
