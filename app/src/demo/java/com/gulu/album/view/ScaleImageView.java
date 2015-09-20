@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.FloatMath;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -79,6 +80,12 @@ public class ScaleImageView extends ImageView{
                 maxZoomTo((int) e.getX(), (int) e.getY());
                 cutting();
                 return super.onDoubleTap(e);
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                Log.d(TAG, "onSingleTapConfirmed");
+                return super.onSingleTapConfirmed(e);
             }
         });
 

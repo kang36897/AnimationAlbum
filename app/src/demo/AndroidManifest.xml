@@ -33,6 +33,8 @@
         <activity android:name=".MatrixImageActivity"
             android:label="@string/title_matrix_image_activity"
             android:parentActivityName=".ListShowCaseActivity"></activity>
+        <activity android:name=".RadialGradientActivity" android:label="@string/title_radial_gradient_activity"
+            android:parentActivityName=".ListShowCaseActivity"/>
     </application>
 
 </manifest>
