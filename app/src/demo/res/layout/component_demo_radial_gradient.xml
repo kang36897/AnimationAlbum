@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mode_nomral"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical" android:padding="4dp">
         <EditText
             android:paddingTop="4dp"
@@ -38,75 +38,12 @@
 
     </LinearLayout>
 
-    <TableLayout
+    <ListView
         android:id="@+id/mode_complex"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:stretchColumns="1">
-        <TableRow>
-            <EditText
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:id="@+id/color_one"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:hint="@string/center_color_hint"
-                android:text="#00ffffff"/>
-            <SeekBar
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:id="@+id/stop_one"
-                android:max="100"
-                android:progress="40"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </TableRow>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-        <TableRow>
-
-            <EditText
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:imeOptions="actionNext"
-                android:id="@+id/color_two"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/edge_color_hint"
-                android:text="#ff00ff"/>
-
-            <SeekBar
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:id="@+id/stop_two"
-                android:max="100"
-                android:progress="70"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </TableRow>
-
-        <TableRow>
-            <EditText
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:imeOptions="actionDone"
-                android:id="@+id/color_three"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/edge_color_hint"
-                android:text="#ff00ff"/>
-
-            <SeekBar
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:id="@+id/stop_three"
-                android:max="100"
-                android:progress="70"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </TableRow>
-    </TableLayout>
 
 
     <SeekBar
