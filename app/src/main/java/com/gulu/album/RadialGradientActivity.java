@@ -3,27 +3,37 @@ package com.gulu.album;
 import android.app.ActionBar;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.gulu.album.view.RadialGradientMode;
 import com.gulu.album.view.RadialGradientView;
 
 import java.util.ArrayList;
+
+import static com.gulu.album.R.id.mode_complex_container;
 
 /**
  * Created by lulala on 20/9/15.
  */
 public class RadialGradientActivity extends BaseActivity {
+    final static String TAG = "RadialGradientActivity";
     private SeekBar mShaderRadiusSeekBar;
     private SeekBar mRadiusSeekBar;
     private RadialGradientView mRadialGradientView;
@@ -34,195 +44,227 @@ public class RadialGradientActivity extends BaseActivity {
     private EditText mCenterColorView;
     private EditText mEdgeColorView;
 
-    private ListView mModeComplex;
-    private EditText[] mColorViews = new EditText[3];
-    private ArrayList<Integer> colors = new ArrayList<>();
-    private SeekBar[] mStopViews = new SeekBar[3];
-    private ArrayList<Float> stops = new ArrayList<Float>();
-    private ArrayList<ColorAndStop> mColorsAndStops = new ArrayList<>();
+    private LinearLayout mModeComplex;
+    private Button mAddBtn;
+    private Button mDeleteBtn;
+
+    private int mPadding;
+    private ArrayList<ColorAndStop> mColorAndStop = new ArrayList<>();
+
 
     private float shaderRadiusRatio;
     private float radiusRatio;
-    private View.OnClickListener mDefaultOnClickListener = new View.OnClickListener() {
+
+
+    private TextView.OnEditorActionListener mDefaultOnEditorActionListener = new TextView.OnEditorActionListener() {
         @Override
-        public void onClick(View v) {
-            v.setEnabled(true);
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                //  v.setEnabled(false);
+                  v.clearFocus();
+                //  mRadialGradientView.clearFocus();
+
+            }
+
+            return false;
         }
     };
-    private SeekBar.OnSeekBarChangeListener mDefaultSeekBarOnChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-            if (checkParamsValid() == false) {
+    private View.OnFocusChangeListener mDefaultOnFocusChangeListenr = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            EditText colorView = (EditText) v;
+            if (hasFocus) {
+
                 return;
             }
 
-            float stop = (float) progress / seekBar.getMax();
-            for (int i = 0; i < mStopViews.length; i++) {
-                if (mStopViews[i] == seekBar) {
-
-                    stops.add(i, stop);
-                    break;
-                }
-            }
-            int[] tempColors = new int[mColorsAndStops.size()];
-            float[] tempStops = new float[mColorsAndStops.size()];
-            for (int j = 0; j < mColorsAndStops.size(); j++) {
-                tempColors[j] = mColorsAndStops.get(j).color;
-                tempStops[j] = mColorsAndStops.get(j).stop;
+            ColorAndStopHolder holder = (ColorAndStopHolder) colorView.getTag();
+            String colorString = colorView.getText().toString();
+            if (TextUtils.isEmpty(colorString)) {
+                Toast.makeText(getApplicationContext(), R.string.color_empty_warning, Toast.LENGTH_SHORT).show();
+                v.requestFocus();
+                return;
             }
 
-            mRadialGradientView.updateShader(shaderRadiusRatio, radiusRatio, tempColors, tempStops);
 
-        }
+            try {
+                holder.mData.color = Color.parseColor(colorString);
+                // colorView.setEnabled(false);
 
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
+                drawAfterUpdate();
+            } catch (Exception e) {
+                colorView.setText("");
+                colorView.requestFocus();
+            }
 
         }
     };
-    private ArrayAdapter<ColorAndStop> mListAdapter = new ArrayAdapter<ColorAndStop>(this, 0, mColorsAndStops) {
 
-        private View.OnFocusChangeListener mDefaultOnFocusChangeListener = new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus == false) {
-                    EditText temp = (EditText) v;
-                    if (TextUtils.isEmpty(temp.getText())) {
-                        v.requestFocus();
-                        return;
-                    }
-
-
-                    ColorAndStop data = (ColorAndStop) v.getTag();
-                    data.color = Color.parseColor(temp.getText().toString());
-
-                    v.setEnabled(false);
-                }
-            }
-        };
-
+    private SeekBar.OnSeekBarChangeListener mDefaultSeekBarOnChangeListener = new SimpleOnSeekBarChangeListener() {
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ColorAndStopHolder holder = null;
-            if (convertView == null) {
-                holder = new ColorAndStopHolder();
-                LinearLayout rootView = new LinearLayout(getContext());
-                rootView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                rootView.setTag(holder);
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            ColorAndStopHolder holder = (ColorAndStopHolder) seekBar.getTag();
 
-                EditText colorView = new EditText(getContext());
-                rootView.addView(colorView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                colorView.setOnClickListener(mDefaultOnClickListener);
-                colorView.setOnFocusChangeListener(mDefaultOnFocusChangeListener);
-                holder.mColorView = colorView;
+            float ratio = (float) progress / 100;
+            holder.mData.stop = ratio;
+            holder.mHintView.setText(String.valueOf(ratio));
 
-                SeekBar stopView = new SeekBar(getContext());
-                rootView.addView(colorView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-                stopView.setOnSeekBarChangeListener(mDefaultSeekBarOnChangeListener);
-                holder.mStopView = stopView;
+            drawAfterUpdate();
 
-            } else {
-                holder = (ColorAndStopHolder) convertView.getTag();
-            }
-
-            ColorAndStop data = getItem(position);
-            holder.mColorView.setTag(data);
-            holder.mStopView.setTag(data);
-
-            return convertView;
         }
     };
+    private ScrollView mModeComplexConatiner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.component_demo_radial_gradient);
 
+        mPadding = getResources().getDimensionPixelSize(R.dimen.default_padding);
+
         mRadialGradientView = (RadialGradientView) findViewById(R.id.radial_gradient_view);
+        mRadialGradientView.requestFocus();
+
         mModeNormal = (LinearLayout) findViewById(R.id.mode_nomral);
+
+        ColorAndStopHolder holder = new ColorAndStopHolder();
+        holder.mData = getColorAndStopAtPosition(0);
+
         mCenterColorView = (EditText) findViewById(R.id.center_color_view);
+        mCenterColorView.setTag(holder);
+        mCenterColorView.setOnFocusChangeListener(mDefaultOnFocusChangeListenr);
+
+
+        mCenterColorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
+        holder.mData.color = Color.parseColor(getString(R.string.default_center_color));
+
+
+        holder = new ColorAndStopHolder();
+        holder.mData = getColorAndStopAtPosition(1);
         mEdgeColorView = (EditText) findViewById(R.id.edge_color_view);
+        mEdgeColorView.setTag(holder);
+        mEdgeColorView.setOnFocusChangeListener(mDefaultOnFocusChangeListenr);
 
+        mEdgeColorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
+        holder.mData.color = Color.parseColor(getString(R.string.default_edge_color));
 
-        mModeComplex = (ListView) findViewById(R.id.mode_complex);
-        ArrayAdapter
-        mModeComplex.setAdapter(mListAdapter);
-
-        for (int i = 0; i < mStopViews.length; i++) {
-            mStopViews[i].setOnSeekBarChangeListener(mDefaultSeekBarOnChangeListener);
-
-        }
-
-
-        mShaderRadiusSeekBar = (SeekBar) findViewById(R.id.shader_ratio);
-        mShaderRadiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mModeComplexConatiner = (ScrollView) findViewById(mode_complex_container);
+        mModeComplex = (LinearLayout) findViewById(R.id.mode_complex);
+        mAddBtn = (Button) findViewById(R.id.add_btn);
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (checkParamsValid() == false) {
-                    return;
-                }
+            public void onClick(View v) {
 
-                shaderRadiusRatio = (float) progress / 100;
-                radiusRatio = (float) mRadiusSeekBar.getProgress() / 100;
 
-                int[] tempColors = new int[colors.size()];
-                float[] tempStops = new float[colors.size()];
-                for (int j = 0; j < colors.size(); j++) {
-                    tempColors[j] = colors.get(j);
-                    tempStops[j] = stops.get(j);
-                }
+                ColorAndStopHolder holder = new ColorAndStopHolder();
+                holder.mData = getColorAndStopAtNextPosition();
 
-                mRadialGradientView.updateShader(shaderRadiusRatio, radiusRatio, tempColors, tempStops);
-            }
+                LinearLayout item = new LinearLayout(RadialGradientActivity.this);
+                item.setTag(holder);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.
+                        LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                item.setLayoutParams(layoutParams);
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+                EditText colorView = new EditText(RadialGradientActivity.this);
+                colorView.setTag(holder);
+                colorView.setHint(R.string.color_hint);
+                colorView.setTextColor(Color.BLACK);
+                colorView.setMaxEms(12);
+                colorView.setPadding(mPadding, mPadding, mPadding, mPadding);
 
-            }
+                colorView.setOnFocusChangeListener(mDefaultOnFocusChangeListenr);
+                colorView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                colorView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+                colorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+                layoutParams = new LinearLayout.
+                        LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                holder.mColorView = colorView;
+                item.addView(colorView, layoutParams);
+
+
+                SeekBar stopView = new SeekBar(RadialGradientActivity.this);
+                stopView.setTag(holder);
+                stopView.setOnSeekBarChangeListener(mDefaultSeekBarOnChangeListener);
+                stopView.setMax(100);
+
+                layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+
+                holder.mStopView = stopView;
+                item.addView(stopView, layoutParams);
+
+                TextView hintView = new TextView(RadialGradientActivity.this);
+                hintView.setPadding(mPadding, mPadding, mPadding, mPadding);
+
+                layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                holder.mHintView = hintView;
+                item.addView(hintView, layoutParams);
+
+                mModeComplex.addView(item);
 
             }
         });
 
-        mRadiusSeekBar = (SeekBar) findViewById(R.id.radius_ratio);
-        mRadiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                if (checkParamsValid() == false) {
+        mDeleteBtn = (Button) findViewById(R.id.delete_btn);
+        mDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mModeComplex.getChildCount() == 1) {
                     return;
                 }
 
+                int index = mModeComplex.getChildCount() - 1;
+                LinearLayout item = (LinearLayout) mModeComplex.getChildAt(index);
+                ColorAndStopHolder holder = (ColorAndStopHolder) item.getTag();
+                item.setTag(null);
+
+                holder.mData = null;
+                holder.mColorView.setTag(null);
+                holder.mColorView = null;
+
+                holder.mStopView.setTag(null);
+                holder.mStopView = null;
+
+                holder.mHintView = null;
+
+                mModeComplex.removeViewAt(index);
+
+
+            }
+        });
+
+        mShaderRadiusSeekBar = (SeekBar) findViewById(R.id.shader_ratio);
+        mShaderRadiusSeekBar.setOnSeekBarChangeListener(new SimpleOnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                shaderRadiusRatio = (float) progress / 100;
+                drawAfterUpdate();
+
+            }
+
+
+        });
+
+        mRadiusSeekBar = (SeekBar) findViewById(R.id.radius_ratio);
+        mRadiusSeekBar.setOnSeekBarChangeListener(new SimpleOnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
                 radiusRatio = (float) progress / 100;
-                shaderRadiusRatio = (float) mShaderRadiusSeekBar.getProgress() / 100;
-
-                int[] tempColors = new int[colors.size()];
-                float[] tempStops = new float[colors.size()];
-                for (int j = 0; j < colors.size(); j++) {
-                    tempColors[j] = colors.get(j);
-                    tempStops[j] = stops.get(j);
-                }
-
-                mRadialGradientView.updateShader(shaderRadiusRatio, radiusRatio, tempColors, tempStops);
+                drawAfterUpdate();
             }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
 
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
         });
 
         ActionBar actionBar = getActionBar();
@@ -239,21 +281,14 @@ public class RadialGradientActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mode = RadialGradientView.POSITION_RADIAL_GRADIENT;
+                    mode = RadialGradientMode.POSITION_RADIAL_GRADIENT;
                     mModeNormal.setVisibility(View.GONE);
-                    mModeComplex.setVisibility(View.VISIBLE);
+                    mModeComplexConatiner.setVisibility(View.VISIBLE);
 
                 } else {
-                    mode = RadialGradientView.NORMAL_RADIAL_GRADIENT;
-
-                    mModeComplex.setVisibility(View.GONE);
+                    mode = RadialGradientMode.NORMAL_RADIAL_GRADIENT;
+                    mModeComplexConatiner.setVisibility(View.GONE);
                     mModeNormal.setVisibility(View.VISIBLE);
-                }
-
-                for (int i = 0; i < mStopViews.length; i++) {
-                    stops[i] = (float) mStopViews[i].getProgress() / mStopViews[i].getMax();
-                    colors[i] = Color.parseColor(mColorViews[i].getText().toString());
-
                 }
 
                 mRadialGradientView.switchMode(mode);
@@ -268,33 +303,67 @@ public class RadialGradientActivity extends BaseActivity {
 
     }
 
-    private boolean checkParamsValid() {
-        if (mode == RadialGradientView.NORMAL_RADIAL_GRADIENT) {
-            if (TextUtils.isEmpty(mCenterColorView.getText()) || TextUtils.isEmpty(mEdgeColorView.getText())) {
-                return false;
+
+    private ColorAndStop getColorAndStopAtPosition(int position) {
+        ColorAndStop data = null;
+        if (mColorAndStop.isEmpty()) {
+            data = new ColorAndStop();
+            mColorAndStop.add(position, data);
+            return data;
+        }
+
+
+        if (position < mColorAndStop.size()) {
+            data = mColorAndStop.get(position);
+        } else {
+            data = new ColorAndStop();
+            mColorAndStop.add(position, data);
+        }
+        return data;
+    }
+
+    @NonNull
+    private ColorAndStop getColorAndStopAtNextPosition() {
+        int index = mModeComplex.getChildCount() - 1;
+
+        return getColorAndStopAtPosition(index);
+    }
+
+    private void drawAfterUpdate() {
+        int[] tempColors;
+        float[] tempStops;
+
+        if (mode == RadialGradientMode.NORMAL_RADIAL_GRADIENT) {
+            tempColors = new int[2];
+            tempStops = null;
+
+            for (int j = 0; j < 2; j++) {
+                ColorAndStop data = mColorAndStop.get(j);
+                tempColors[j] = data.color;
             }
 
-            try {
-                colors.add(0, Color.parseColor(mCenterColorView.getText().toString()));
-                colors.add(1, Color.parseColor(mEdgeColorView.getText().toString()));
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-                return false;
-            }
-
-
-            return true;
 
         } else {
-            if (mColorsAndStops.isEmpty()) {
-                return false;
+            int length = mModeComplex.getChildCount() - 1;
+            if (length < 2) {
+                return;
+            }
+
+            tempColors = new int[length];
+            tempStops = new float[length];
+
+            for (int i = 0; i < length; i++) {
+                ColorAndStop data = mColorAndStop.get(i);
+                tempColors[i] = data.color;
+                tempStops[i] = data.stop;
             }
 
 
-            return true;
-
         }
+
+        mRadialGradientView.updateShader(shaderRadiusRatio, radiusRatio, tempColors, tempStops);
     }
+
 
     public static class ColorAndStop {
         int color;
@@ -304,5 +373,26 @@ public class RadialGradientActivity extends BaseActivity {
     static class ColorAndStopHolder {
         public EditText mColorView;
         public SeekBar mStopView;
+        public TextView mHintView;
+
+        public ColorAndStop mData;
+    }
+
+
+    static class SimpleOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
     }
 }

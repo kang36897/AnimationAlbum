@@ -15,9 +15,8 @@ import android.view.View;
  */
 public class RadialGradientView extends View {
 
-    public final static int NORMAL_RADIAL_GRADIENT = 0;
-    public final static int POSITION_RADIAL_GRADIENT = 1;
-    private int mCurrentMode = NORMAL_RADIAL_GRADIENT;
+
+    private int mCurrentMode = RadialGradientMode.NORMAL_RADIAL_GRADIENT;
 
 
     private RadialGradient mRadialGradient;
@@ -110,7 +109,7 @@ public class RadialGradientView extends View {
     }
 
     public void updateShader(float shaderRatio, float radiusRatio, int[] colors, float[] stops) {
-        if(mCurrentMode == NORMAL_RADIAL_GRADIENT)
+        if(mCurrentMode == RadialGradientMode.NORMAL_RADIAL_GRADIENT)
         {
             updateShader(shaderRatio, radiusRatio,colors[0], colors[1]);
             return;
@@ -139,4 +138,8 @@ public class RadialGradientView extends View {
         return mCurrentMode;
     }
 
+
+
+
 }
+
