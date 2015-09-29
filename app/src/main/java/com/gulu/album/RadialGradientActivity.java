@@ -101,7 +101,7 @@ public class RadialGradientActivity extends BaseActivity {
 
                 drawAfterUpdate();
             } catch (Exception e) {
-                colorView.setText("");
+                colorView.setText("#");
                 colorView.requestFocus();
             }
 
