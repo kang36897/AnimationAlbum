@@ -6,17 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -27,7 +26,6 @@ import com.gulu.album.view.RadialGradientView;
 
 import java.util.ArrayList;
 
-import static com.gulu.album.R.id.mode_complex_container;
 
 /**
  * Created by lulala on 20/9/15.
@@ -55,6 +53,12 @@ public class RadialGradientActivity extends BaseActivity {
     private float shaderRadiusRatio;
     private float radiusRatio;
 
+    private View.OnClickListener mDefaultOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.d(TAG,"onClick()");
+        }
+    };
 
     private TextView.OnEditorActionListener mDefaultOnEditorActionListener = new TextView.OnEditorActionListener() {
         @Override
@@ -62,9 +66,7 @@ public class RadialGradientActivity extends BaseActivity {
 
 
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                //  v.setEnabled(false);
-                  v.clearFocus();
-                //  mRadialGradientView.clearFocus();
+
 
             }
 
@@ -116,7 +118,7 @@ public class RadialGradientActivity extends BaseActivity {
 
         }
     };
-    private ScrollView mModeComplexConatiner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,9 +138,10 @@ public class RadialGradientActivity extends BaseActivity {
         mCenterColorView = (EditText) findViewById(R.id.center_color_view);
         mCenterColorView.setTag(holder);
         mCenterColorView.setOnFocusChangeListener(mDefaultOnFocusChangeListenr);
+        mCenterColorView.setOnClickListener(mDefaultOnClickListener);
 
 
-        mCenterColorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
+         mCenterColorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
         holder.mData.color = Color.parseColor(getString(R.string.default_center_color));
 
 
@@ -148,10 +151,10 @@ public class RadialGradientActivity extends BaseActivity {
         mEdgeColorView.setTag(holder);
         mEdgeColorView.setOnFocusChangeListener(mDefaultOnFocusChangeListenr);
 
-        mEdgeColorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
+          mEdgeColorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
         holder.mData.color = Color.parseColor(getString(R.string.default_edge_color));
 
-        mModeComplexConatiner = (ScrollView) findViewById(mode_complex_container);
+
         mModeComplex = (LinearLayout) findViewById(R.id.mode_complex);
         mAddBtn = (Button) findViewById(R.id.add_btn);
         mAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +182,7 @@ public class RadialGradientActivity extends BaseActivity {
                 colorView.setOnFocusChangeListener(mDefaultOnFocusChangeListenr);
                 colorView.setImeOptions(EditorInfo.IME_ACTION_DONE);
                 colorView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-                colorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
+                 colorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
 
                 layoutParams = new LinearLayout.
                         LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -283,11 +286,11 @@ public class RadialGradientActivity extends BaseActivity {
                 if (isChecked) {
                     mode = RadialGradientMode.POSITION_RADIAL_GRADIENT;
                     mModeNormal.setVisibility(View.GONE);
-                    mModeComplexConatiner.setVisibility(View.VISIBLE);
+                    mModeComplex.setVisibility(View.VISIBLE);
 
                 } else {
                     mode = RadialGradientMode.NORMAL_RADIAL_GRADIENT;
-                    mModeComplexConatiner.setVisibility(View.GONE);
+                    mModeComplex.setVisibility(View.GONE);
                     mModeNormal.setVisibility(View.VISIBLE);
                 }
 

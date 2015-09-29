@@ -1,110 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <com.gulu.album.view.RadialGradientView
-        android:id="@+id/radial_gradient_view"
-        android:focusableInTouchMode="true"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_gravity="center_horizontal"
-        android:focusable="true"
-        android:clickable="true"
-        android:background="#515151"
-        android:padding="8dp" />
+    android:fillViewport="true">
 
     <LinearLayout
-        android:id="@+id/mode_nomral"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-        android:padding="4dp"
-       >
-
-        <EditText
-            android:id="@+id/center_color_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/center_color_hint"
-            android:imeOptions="actionDone"
-            android:inputType="textCapCharacters"
-            android:paddingBottom="4dp"
-
-            android:paddingTop="4dp"
-            android:text="@string/default_center_color" />
-
-        <EditText
-            android:id="@+id/edge_color_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/edge_color_hint"
-            android:inputType="textCapSentences"
-            android:imeOptions="actionDone"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
-            android:text="@string/default_edge_color" />
-
-    </LinearLayout>
-
-
-    <ScrollView
-        android:id="@+id/mode_complex_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:visibility="gone"
-        android:fillViewport="true">
-    <LinearLayout
-        android:id="@+id/mode_complex"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-
         android:orientation="vertical">
 
+        <com.gulu.album.view.RadialGradientView
+            android:id="@+id/radial_gradient_view"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#515151"
+            android:focusable="true"
+
+            android:focusableInTouchMode="true"
+            android:padding="8dp" />
+
         <LinearLayout
-            android:id="@+id/controller_pad"
+            android:id="@+id/mode_nomral"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
 
-            <Button
-                android:id="@+id/add_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/action_add" />
+            android:padding="4dp">
 
-            <Button
-                android:id="@+id/delete_btn"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/center_color_view"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/action_delete" />
+                android:hint="@string/center_color_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textCapCharacters"
+                android:paddingBottom="4dp"
+
+                android:paddingTop="4dp"
+                android:text="@string/default_center_color" />
+
+            <EditText
+                android:id="@+id/edge_color_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edge_color_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:text="@string/default_edge_color" />
+
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/mode_complex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/controller_pad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/add_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/action_add" />
+
+                <Button
+                    android:id="@+id/delete_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/action_delete" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <SeekBar
+            android:id="@+id/shader_ratio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:progress="80" />
+
+        <SeekBar
+            android:id="@+id/radius_ratio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:progress="80" />
     </LinearLayout>
-    </ScrollView>
-
-    <SeekBar
-        android:id="@+id/shader_ratio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="200"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:progress="80" />
-
-    <SeekBar
-        android:id="@+id/radius_ratio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="200"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:progress="80" />
-</LinearLayout>
+</ScrollView>
