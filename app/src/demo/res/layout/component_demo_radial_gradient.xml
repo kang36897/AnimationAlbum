@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/edge_color_hint"
                 android:imeOptions="actionDone"
-                android:inputType="textCapSentences"
+                android:inputType="textCapCharacters"
                 android:paddingBottom="4dp"
                 android:paddingTop="4dp"
                 android:text="@string/default_edge_color" />

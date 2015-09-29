@@ -57,6 +57,9 @@ public class RadialGradientActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             Log.d(TAG,"onClick()");
+            v.setFocusable(true);
+            v.setFocusableInTouchMode(true);
+            v.requestFocus();
         }
     };
 
@@ -67,7 +70,7 @@ public class RadialGradientActivity extends BaseActivity {
 
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-
+              v.setFocusable(false);
             }
 
             return false;
@@ -150,7 +153,7 @@ public class RadialGradientActivity extends BaseActivity {
         mEdgeColorView = (EditText) findViewById(R.id.edge_color_view);
         mEdgeColorView.setTag(holder);
         mEdgeColorView.setOnFocusChangeListener(mDefaultOnFocusChangeListenr);
-
+        mEdgeColorView.setOnClickListener(mDefaultOnClickListener);
           mEdgeColorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
         holder.mData.color = Color.parseColor(getString(R.string.default_edge_color));
 
@@ -183,6 +186,7 @@ public class RadialGradientActivity extends BaseActivity {
                 colorView.setImeOptions(EditorInfo.IME_ACTION_DONE);
                 colorView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
                  colorView.setOnEditorActionListener(mDefaultOnEditorActionListener);
+                colorView.setOnClickListener(mDefaultOnClickListener);
 
                 layoutParams = new LinearLayout.
                         LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
