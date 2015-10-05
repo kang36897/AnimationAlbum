@@ -76,4 +76,5 @@
     <string name="center_color_hint">Center Color</string>
     <string name="edge_color_hint">Edge Color</string>
     <string name="title_radial_gradient_activity">Radial Gradient</string>
+    <string name="title_activity_rounded_bitmap_drawable">Rounded Bitmap Drawable from V4</string>
 </resources>

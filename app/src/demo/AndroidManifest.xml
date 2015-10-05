@@ -36,6 +36,8 @@
         <activity android:name=".RadialGradientActivity" android:label="@string/title_radial_gradient_activity"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".ListShowCaseActivity"/>
+        <activity android:name=".RoundedBitmapDrawableActivity" android:label="@string/title_activity_rounded_bitmap_drawable"
+            android:parentActivityName=".ListShowCaseActivity"/>
     </application>
 
 </manifest>
